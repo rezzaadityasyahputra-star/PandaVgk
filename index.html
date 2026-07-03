@@ -83,7 +83,6 @@
             transform: scale(1.05);
         }
 
-        /* Titik Merah Notifikasi */
         .notification-badge {
             position: absolute;
             top: 2px;
@@ -184,7 +183,7 @@
             text-align: center;
         }
 
-        /* --- GRID CONTENT (RESPONSIVE) --- */
+        /* --- GRID CONTENT --- */
         .vgk-grid {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
@@ -330,7 +329,7 @@
         }
         .grid-item:hover .btn-continue i { transform: translateX(6px); }
 
-        /* --- DETAIL PAGE COMPONENT --- */
+        /* --- DETAIL PAGE --- */
         #detail-page {
             display: none;
             animation: fadeIn 0.6s ease;
@@ -393,7 +392,6 @@
             border-radius: 4px 12px 12px 4px;
         }
 
-        /* --- WRAPPER TABLE RESPONSIF --- */
         .table-responsive {
             width: 100%;
             overflow-x: auto;
@@ -461,164 +459,6 @@
             box-shadow: 0 8px 20px rgba(46, 213, 115, 0.4); 
         }
 
-        /* --- LIVE CHAT PAGE --- */
-        #chat-page {
-            display: none;
-            animation: fadeInUp 0.6s ease;
-        }
-
-        .chat-container {
-            max-width: 800px;
-            margin: 30px auto;
-            background: #121826;
-            border-radius: 24px;
-            border: 1px solid rgba(255, 255, 255, 0.05);
-            display: flex;
-            flex-direction: column;
-            height: 600px;
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
-            overflow: hidden;
-        }
-
-        .chat-header {
-            padding: 20px;
-            background: #161d2f;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
-            display: flex;
-            align-items: center;
-            gap: 15px;
-        }
-
-        .chat-header-info h3 {
-            font-size: 1.1rem;
-            font-weight: 800;
-            display: flex;
-            align-items: center;
-            gap: 6px;
-        }
-
-        .chat-header-info h3 i { color: #1e90ff; font-size: 0.95rem; }
-
-        .chat-header-info p {
-            font-size: 0.85rem;
-            color: #2ed573;
-            font-weight: 600;
-            display: flex;
-            align-items: center;
-            gap: 5px;
-            margin-top: 2px;
-        }
-
-        .chat-header-info p::before {
-            content: '';
-            width: 8px;
-            height: 8px;
-            background: #2ed573;
-            border-radius: 50%;
-            display: inline-block;
-        }
-
-        .chat-messages {
-            flex: 1;
-            padding: 25px;
-            overflow-y: auto;
-            display: flex;
-            flex-direction: column;
-            gap: 20px;
-            background: #0d121f;
-        }
-
-        .msg-row {
-            display: flex;
-            gap: 12px;
-            max-width: 75%;
-        }
-
-        .msg-row.incoming { align-self: flex-start; }
-        .msg-row.outgoing { align-self: flex-end; flex-direction: row-reverse; }
-
-        .msg-avatar {
-            width: 38px;
-            height: 38px;
-            border-radius: 50%;
-            object-fit: cover;
-            border: 2px solid rgba(255, 255, 255, 0.1);
-        }
-
-        .msg-bubble {
-            padding: 14px 18px;
-            border-radius: 18px;
-            font-size: 0.95rem;
-            line-height: 1.5;
-        }
-
-        .incoming .msg-bubble {
-            background: #161d2f;
-            color: #cbd5e1;
-            border-top-left-radius: 4px;
-            border: 1px solid rgba(255, 255, 255, 0.03);
-        }
-
-        .outgoing .msg-bubble {
-            background: linear-gradient(135deg, #ff4757, #ff6b81);
-            color: #ffffff;
-            border-top-right-radius: 4px;
-            box-shadow: 0 5px 15px rgba(255, 71, 87, 0.2);
-        }
-
-        .msg-meta {
-            font-size: 0.75rem;
-            color: #747d8c;
-            margin-top: 5px;
-            font-weight: 600;
-            display: block;
-        }
-        .outgoing .msg-meta { text-align: right; color: rgba(255, 255, 255, 0.6); }
-
-        .chat-input-area {
-            padding: 15px 20px;
-            background: #161d2f;
-            border-top: 1px solid rgba(255, 255, 255, 0.05);
-            display: flex;
-            gap: 12px;
-            align-items: center;
-        }
-
-        .chat-input-area input {
-            flex: 1;
-            background: #0d121f;
-            border: 1px solid rgba(255, 255, 255, 0.08);
-            padding: 14px 20px;
-            border-radius: 14px;
-            color: #ffffff;
-            font-size: 0.95rem;
-            outline: none;
-            transition: border-color 0.3s ease;
-        }
-
-        .chat-input-area input:focus { border-color: #ff4757; }
-
-        .btn-send-chat {
-            background: #ff4757;
-            color: white;
-            border: none;
-            width: 48px;
-            height: 48px;
-            border-radius: 14px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 1.1rem;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            box-shadow: 0 5px 15px rgba(255, 71, 87, 0.3);
-        }
-
-        .btn-send-chat:hover {
-            background: #ff6b81;
-            transform: scale(1.03);
-        }
-
         /* --- NOTIFICATION PAGE --- */
         #notification-page {
             display: none;
@@ -645,9 +485,7 @@
             color: #ffffff;
         }
 
-        .notif-header-title i {
-            color: #ff4757;
-        }
+        .notif-header-title i { color: #ff4757; }
 
         .notif-box {
             background: rgba(255, 255, 255, 0.02);
@@ -689,10 +527,7 @@
             gap: 5px;
         }
 
-        .notif-sender-name i {
-            color: #1e90ff;
-            font-size: 0.95rem;
-        }
+        .notif-sender-name i { color: #1e90ff; font-size: 0.95rem; }
 
         .notif-message {
             font-size: 0.95rem;
@@ -754,10 +589,7 @@
             margin-bottom: 15px;
         }
 
-        .about-brand-title i {
-            color: #1e90ff;
-            font-size: 1.5rem;
-        }
+        .about-brand-title i { color: #1e90ff; font-size: 1.5rem; }
 
         .about-desc {
             font-size: 1.05rem;
@@ -822,8 +654,6 @@
             .detail-title { font-size: 1.6rem; }
             .detail-desc { font-size: 0.95rem; padding: 12px 15px; }
             .notif-container { padding: 20px 15px; }
-            .chat-container { height: 500px; }
-            .msg-row { max-width: 85%; }
         }
 
         @media (min-width: 769px) {
@@ -832,9 +662,7 @@
                 justify-content: space-between;
                 align-items: center;
             }
-            .btn-continue {
-                width: auto;
-            }
+            .btn-continue { width: auto; }
         }
     </style>
 </head>
@@ -843,9 +671,6 @@
     <nav>
         <div class="logo" onclick="showMainPage()">PandaVgk</div>
         <div class="nav-actions">
-            <button class="nav-btn" onclick="showChatPage()" title="Live Chat">
-                <i class="fa-solid fa-comments"></i>
-            </button>
             <button class="nav-btn" onclick="showNotificationPage()" title="Notifikasi">
                 <i class="fa-solid fa-bell"></i>
                 <div id="notif-badge" class="notification-badge"></div>
@@ -945,41 +770,6 @@
             </div>
         </div>
 
-        <div id="chat-page">
-            <button class="btn-back" onclick="showMainPage()">
-                <i class="fa-solid fa-arrow-left"></i> Kembali ke Beranda
-            </button>
-
-            <div class="chat-container">
-                <div class="chat-header">
-                    <img src="https://i.ibb.co.com/4RhtrrDM/image.png" alt="PandaVgk Admin" class="grid-creator-img" style="width: 40px; height: 40px;">
-                    <div class="chat-header-info">
-                        <h3>PandaVgk Chatroom <i class="fa-solid fa-circle-check"></i></h3>
-                        <p>Kreator Online</p>
-                    </div>
-                </div>
-
-                <div class="chat-messages" id="chat-box-messages">
-                    <div class="msg-row incoming">
-                        <img src="https://i.ibb.co.com/4RhtrrDM/image.png" alt="PandaVgk Avatar" class="msg-avatar">
-                        <div>
-                            <div class="msg-bubble">
-                                Halo bray! Selamat datang di Live Chat PandaVgk. Ada yang bisa dibantu atau mau request mentahan VGK apa nih? 🤖🔥
-                            </div>
-                            <span class="msg-meta">PandaVgk • Baru saja</span>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="chat-input-area">
-                    <input type="text" id="input-chat-message" placeholder="Ketik pesan Anda di sini, bray...">
-                    <button class="btn-send-chat" onclick="sendUserMessage()">
-                        <i class="fa-solid fa-paper-plane"></i>
-                    </button>
-                </div>
-            </div>
-        </div>
-
         <div id="notification-page">
             <button class="btn-back" onclick="showMainPage()">
                 <i class="fa-solid fa-arrow-left"></i> Kembali ke Beranda
@@ -1015,7 +805,7 @@
                     </h2>
                     
                     <p class="about-desc">
-                        Website ini dibuat dari ide-ide sederhana untuk membagikan Video VGK pilihan terbaik secara gratis dan mudah diakses oleh semua orang.
+                        Website ini dibuat dari id-ide sederhana untuk membagikan Video VGK pilihan terbaik secara gratis dan mudah diakses oleh semua orang.
                     </p>
                     
                     <button class="btn-home" onclick="showMainPage()">
@@ -1028,10 +818,9 @@
     </div>
 
     <script>
-        // --- FUNCTION: REALTIME TIME AGO TRACKER ---
+        // --- TIMEOUT AGO TRACKER ---
         function updateTimeAgo() {
             const items = document.querySelectorAll('.grid-item');
-            
             items.forEach(item => {
                 const timestampAttr = item.getAttribute('data-timestamp');
                 if (!timestampAttr) return;
@@ -1039,7 +828,6 @@
                 const createdTime = new Date(timestampAttr);
                 const now = new Date();
                 const diffInSeconds = Math.floor((now - createdTime) / 1000);
-                
                 let timeText = "baru saja";
 
                 if (diffInSeconds >= 60) {
@@ -1058,9 +846,7 @@
                 }
 
                 const tickerSpan = item.querySelector('.time-ticker');
-                if (tickerSpan) {
-                    tickerSpan.innerText = timeText;
-                }
+                if (tickerSpan) tickerSpan.innerText = timeText;
             });
         }
 
@@ -1069,7 +855,6 @@
             setInterval(updateTimeAgo, 30000);
 
             const gridItems = document.querySelectorAll('.grid-item');
-            
             const observer = new IntersectionObserver((entries) => {
                 entries.forEach((entry, index) => {
                     if (entry.isIntersecting) {
@@ -1079,13 +864,9 @@
                         observer.unobserve(entry.target);
                     }
                 });
-            }, {
-                threshold: 0.05
-            });
+            }, { threshold: 0.05 });
 
-            gridItems.forEach(item => {
-                observer.observe(item);
-            });
+            gridItems.forEach(item => observer.observe(item));
 
             const buttons = document.querySelectorAll('.btn-continue');
             buttons.forEach(btn => {
@@ -1105,25 +886,13 @@
                     }, 150);
                 });
             });
-
-            // Menjalankan kirim chat saat menekan tombol Enter di keyboard
-            const chatInput = document.getElementById('input-chat-message');
-            if (chatInput) {
-                chatInput.addEventListener('keypress', function(e) {
-                    if (e.key === 'Enter') {
-                        sendUserMessage();
-                    }
-                });
-            }
         });
 
-        // Helper untuk menyembunyikan semua halaman komponen dinamis
         function hideAllPages() {
             document.getElementById('main-page').style.display = 'none';
             document.getElementById('detail-page').style.display = 'none';
             document.getElementById('about-page').style.display = 'none';
             document.getElementById('notification-page').style.display = 'none';
-            document.getElementById('chat-page').style.display = 'none';
         }
 
         function showMainPage() {
@@ -1141,78 +910,26 @@
         function showNotificationPage() {
             hideAllPages();
             document.getElementById('notification-page').style.display = 'block';
-            
-            // Menghilangkan titik merah penanda setelah user membuka halaman notifikasi
             const badge = document.getElementById('notif-badge');
-            if (badge) {
-                badge.style.display = 'none';
-            }
-            
+            if (badge) badge.style.display = 'none';
             window.scrollTo({ top: 0, behavior: 'smooth' });
-        }
-
-        // Fungsi menampilkan halaman live chat terbaru
-        function showChatPage() {
-            hideAllPages();
-            document.getElementById('chat-page').style.display = 'block';
-            window.scrollTo({ top: 0, behavior: 'smooth' });
-            
-            // Auto-scroll ke bagian chat paling bawah saat halaman dibuka
-            const chatBox = document.getElementById('chat-box-messages');
-            chatBox.scrollTop = chatBox.scrollHeight;
-        }
-
-        // Fungsi interaktif mengirim pesan di ruang obrolan
-        function sendUserMessage() {
-            const inputElement = document.getElementById('input-chat-message');
-            const messageText = inputElement.value.trim();
-            
-            if (messageText === '') return;
-
-            const chatMessagesContainer = document.getElementById('chat-box-messages');
-
-            // Template struktur balon pesan kiriman user (kanan)
-            const msgRow = document.createElement('div');
-            msgRow.className = 'msg-row outgoing';
-            
-            msgRow.innerHTML = `
-                <div>
-                    <div class="msg-bubble">
-                        ${messageText}
-                    </div>
-                    <span class="msg-meta">Anda • Baru saja</span>
-                </div>
-            `;
-
-            chatMessagesContainer.appendChild(msgRow);
-            
-            // Mengosongkan kolom input setelah terkirim
-            inputElement.value = '';
-            
-            // Otomatis gulir kebawah setelah ada pesan baru masuk
-            chatMessagesContainer.scrollTop = chatMessagesContainer.scrollHeight;
-
-            // Simulasi respon otomatis dari sistem/admin PandaVgk biar makin hidup bray!
-            setTimeout(() => {
-                const autoReplyRow = document.createElement('div');
-                autoReplyRow.className = 'msg-row incoming';
-                autoReplyRow.innerHTML = `
-                    <img src="https://i.ibb.co.com/4RhtrrDM/image.png" alt="PandaVgk Avatar" class="msg-avatar">
-                    <div>
-                        <div class="msg-bubble">
-                            Pesanmu sudah terkirim bray! Tunggu admin baca atau langsung cek update VGK berkala di beranda ya 🗿👍
-                        </div>
-                        <span class="msg-meta">PandaVgk • Baru saja</span>
-                    </div>
-                `;
-                chatMessagesContainer.appendChild(autoReplyRow);
-                chatMessagesContainer.scrollTop = chatMessagesContainer.scrollHeight;
-            }, 1200);
         }
 
         function triggerDownload() {
             alert('Mengalihkan ke server unduhan aman PandaVgk... Silakan unduh file Anda!');
         }
     </script>
-</body>
+
+    <script type="text/javascript">
+    var Tawk_API=Tawk_API||{}, Tawk_LoadStart=new Date();
+    (function(){
+    var s1=document.createElement("script"),s0=document.getElementsByTagName("script")[0];
+    s1.async=true;
+    s1.src='https://embed.tawk.to/6a474f0b8c45b31d46f21702/1jsj8phmp';
+    s1.charset='UTF-8';
+    s1.setAttribute('crossorigin','*');
+    s0.parentNode.insertBefore(s1,s0);
+    })();
+    </script>
+    </body>
 </html>
