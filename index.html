@@ -16,10 +16,38 @@
             font-family: 'Plus Jakarta Sans', sans-serif;
         }
 
+        /* Root Variabel Warna untuk mempermudah Theme Toggle */
+        :root {
+            --bg-color: #0b0f19;
+            --container-bg: #121826;
+            --header-bg: #161d2f;
+            --text-color: #ffffff;
+            --text-muted: #a4b0be;
+            --text-desc: #cbd5e1;
+            --nav-bg: rgba(11, 15, 25, 0.8);
+            --border-color: rgba(255, 255, 255, 0.05);
+            --table-bg: #0d121f;
+        }
+
+        /* Variabel Terang (Light Mode) */
+        [data-theme="light"] {
+            --bg-color: #f1f2f6;
+            --container-bg: #ffffff;
+            --header-bg: #f5f6fa;
+            --text-color: #2f3542;
+            --text-muted: #747d8c;
+            --text-desc: #57606f;
+            --nav-bg: rgba(241, 242, 246, 0.8);
+            --border-color: rgba(0, 0, 0, 0.08);
+            --table-bg: #f8f9fa;
+        }
+
         body {
-            background-color: #0b0f19;
-            color: #ffffff;
+            background-color: var(--bg-color);
+            color: var(--text-color);
             overflow-x: hidden;
+            /* Animasi transisi perubahan warna background & teks */
+            transition: background-color 0.5s cubic-bezier(0.4, 0, 0.2, 1), color 0.5s ease;
         }
 
         /* --- NAVBAR --- */
@@ -28,15 +56,16 @@
             justify-content: space-between;
             align-items: center;
             padding: 15px 4%;
-            background: rgba(11, 15, 25, 0.8);
+            background: var(--nav-bg);
             backdrop-filter: blur(12px);
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             z-index: 1000;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            border-bottom: 1px solid var(--border-color);
             animation: fadeInDown 0.8s ease;
+            transition: background 0.5s ease, border-bottom 0.5s ease;
         }
 
         .logo {
@@ -62,8 +91,8 @@
 
         .nav-btn {
             background: rgba(255, 255, 255, 0.05);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            color: #ffffff;
+            border: 1px solid var(--border-color);
+            color: var(--text-color);
             width: 40px;
             height: 40px;
             border-radius: 50%;
@@ -76,9 +105,15 @@
             transition: all 0.3s ease;
         }
 
+        /* Style khusus tombol theme di light mode agar kontras */
+        [data-theme="light"] .nav-btn {
+            background: rgba(0, 0, 0, 0.05);
+        }
+
         .nav-btn:hover {
             background: #ff4757;
             border-color: #ff4757;
+            color: #ffffff;
             box-shadow: 0 0 15px rgba(255, 71, 87, 0.4);
             transform: scale(1.05);
         }
@@ -91,7 +126,7 @@
             height: 10px;
             background-color: #ff4757;
             border-radius: 50%;
-            border: 2px solid #0b0f19;
+            border: 2px solid var(--bg-color);
         }
 
         /* --- MAIN CONTAINER --- */
@@ -108,7 +143,7 @@
             height: 350px; 
             border-radius: 20px;
             overflow: hidden;
-            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.5);
+            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.3);
             animation: zoomIn 1s ease;
         }
 
@@ -149,6 +184,7 @@
             text-shadow: 0 4px 20px rgba(0,0,0,0.8);
             letter-spacing: 1px;
             line-height: 1.3;
+            color: #ffffff;
             animation: fadeInUp 1s ease 0.2s both;
         }
 
@@ -178,8 +214,8 @@
             font-weight: 800;
             padding: 0 25px;
             letter-spacing: 4px;
-            color: #ffffff;
-            text-shadow: 0 0 15px rgba(255, 71, 87, 0.4);
+            color: var(--text-color);
+            text-shadow: 0 0 15px rgba(255, 71, 87, 0.2);
             text-align: center;
         }
 
@@ -192,14 +228,14 @@
         }
 
         .grid-item {
-            background: #121826;
+            background: var(--container-bg);
             border-radius: 20px;
             overflow: hidden;
-            border: 1px solid rgba(255, 255, 255, 0.05);
-            transition: all 0.5s cubic-bezier(0.165, 0.84, 0.44, 1);
+            border: 1px solid var(--border-color);
+            transition: all 0.5s cubic-bezier(0.165, 0.84, 0.44, 1), background-color 0.5s ease, border-color 0.5s ease;
             opacity: 0;
             transform: translateY(40px);
-            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.3);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.15);
         }
 
         .grid-item.show {
@@ -210,7 +246,7 @@
         .grid-item:hover {
             transform: translateY(-8px);
             border-color: rgba(255, 71, 87, 0.4);
-            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.6), 0 0 30px rgba(255, 71, 87, 0.15);
+            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.3), 0 0 30px rgba(255, 71, 87, 0.15);
         }
 
         .grid-item-header {
@@ -218,8 +254,9 @@
             justify-content: space-between;
             align-items: center;
             padding: 12px 16px;
-            background: #161d2f;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.03);
+            background: var(--header-bg);
+            border-bottom: 1px solid var(--border-color);
+            transition: background 0.5s ease, border-bottom 0.5s ease;
         }
 
         .grid-creator {
@@ -239,7 +276,7 @@
         .grid-creator-name {
             font-size: 0.85rem;
             font-weight: 700;
-            color: #ffffff;
+            color: var(--text-color);
             display: flex;
             align-items: center;
             gap: 4px;
@@ -252,7 +289,7 @@
 
         .grid-time-info {
             font-size: 0.8rem;
-            color: #a4b0be;
+            color: var(--text-muted);
             font-weight: 600;
             background: rgba(255, 255, 255, 0.05);
             padding: 4px 10px;
@@ -260,6 +297,10 @@
             display: flex;
             align-items: center;
             gap: 5px;
+        }
+
+        [data-theme="light"] .grid-time-info {
+            background: rgba(0, 0, 0, 0.05);
         }
 
         .item-banner {
@@ -288,26 +329,26 @@
             flex-direction: column;
             gap: 20px;
             padding: 25px;
-            background: linear-gradient(to top, #0d121f, #121826);
-            border-top: 1px solid rgba(255, 255, 255, 0.02);
+            background: linear-gradient(to top, var(--table-bg), var(--container-bg));
+            border-top: 1px solid var(--border-color);
         }
 
         .item-info h3 {
             font-size: 1.3rem;
             font-weight: 700;
             margin-bottom: 6px;
-            color: #ffffff;
+            color: var(--text-color);
         }
 
         .item-info p {
             font-size: 0.95rem;
-            color: #a4b0be;
+            color: var(--text-muted);
         }
 
         .btn-continue {
             background: rgba(255, 255, 255, 0.03);
-            color: #ffffff;
-            border: 1px solid rgba(255, 255, 255, 0.1);
+            color: var(--text-color);
+            border: 1px solid var(--border-color);
             padding: 12px 24px;
             font-size: 0.95rem;
             font-weight: 700;
@@ -321,10 +362,15 @@
             width: 100%;
         }
 
+        [data-theme="light"] .btn-continue {
+            background: rgba(0, 0, 0, 0.02);
+        }
+
         .btn-continue i { transition: transform 0.3s ease; }
         .grid-item:hover .btn-continue {
             background: #ff4757;
             border-color: #ff4757;
+            color: #ffffff;
             box-shadow: 0 6px 20px rgba(255, 71, 87, 0.4);
         }
         .grid-item:hover .btn-continue i { transform: translateX(6px); }
@@ -338,7 +384,7 @@
         .btn-back {
             background: none;
             border: none;
-            color: #a4b0be;
+            color: var(--text-muted);
             font-size: 1rem;
             font-weight: 600;
             cursor: pointer;
@@ -357,7 +403,7 @@
             border-radius: 20px;
             overflow: hidden;
             position: relative;
-            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.5);
+            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.2);
             margin-bottom: 30px;
         }
 
@@ -368,22 +414,23 @@
         }
 
         .detail-info-box {
-            background: #121826;
+            background: var(--container-bg);
             border-radius: 20px;
             padding: 30px 20px;
-            border: 1px solid rgba(255, 255, 255, 0.05);
+            border: 1px solid var(--border-color);
+            transition: background-color 0.5s ease;
         }
 
         .detail-title {
             font-size: 2rem;
             font-weight: 800;
             margin-bottom: 15px;
-            color: #ffffff;
+            color: var(--text-color);
         }
 
         .detail-desc {
             font-size: 1.05rem;
-            color: #cbd5e1;
+            color: var(--text-desc);
             line-height: 1.7;
             margin-bottom: 30px;
             background: rgba(255, 255, 255, 0.02);
@@ -392,20 +439,25 @@
             border-radius: 4px 12px 12px 4px;
         }
 
+        [data-theme="light"] .detail-desc {
+            background: rgba(0, 0, 0, 0.02);
+        }
+
         .table-responsive {
             width: 100%;
             overflow-x: auto;
             -webkit-overflow-scrolling: touch;
             border-radius: 12px;
-            border: 1px solid rgba(255, 255, 255, 0.05);
+            border: 1px solid var(--border-color);
             margin-top: 20px;
         }
 
         .download-table {
             width: 100%;
             border-collapse: collapse;
-            background: #0d121f;
+            background: var(--table-bg);
             min-width: 600px; 
+            transition: background-color 0.5s ease;
         }
 
         .download-table th, .download-table td { 
@@ -417,13 +469,18 @@
             background: rgba(255, 255, 255, 0.03);
             font-size: 1rem;
             font-weight: 700;
-            color: #a4b0be;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+            color: var(--text-muted);
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        [data-theme="light"] .download-table th {
+            background: rgba(0, 0, 0, 0.02);
         }
 
         .download-table td { 
-            border-bottom: 1px solid rgba(255, 255, 255, 0.03); 
+            border-bottom: 1px solid var(--border-color); 
             font-size: 1rem; 
+            color: var(--text-color);
         }
 
         .brand-verified {
@@ -431,7 +488,7 @@
             align-items: center;
             gap: 8px;
             font-weight: 800;
-            color: #ffffff;
+            color: var(--text-color);
             letter-spacing: 0.5px;
         }
 
@@ -468,11 +525,12 @@
         .notif-container {
             max-width: 700px;
             margin: 40px auto;
-            background: #121826;
+            background: var(--container-bg);
             border-radius: 24px;
-            border: 1px solid rgba(255, 255, 255, 0.05);
+            border: 1px solid var(--border-color);
             padding: 30px 25px;
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+            transition: background-color 0.5s ease;
         }
 
         .notif-header-title {
@@ -482,14 +540,14 @@
             display: flex;
             align-items: center;
             gap: 12px;
-            color: #ffffff;
+            color: var(--text-color);
         }
 
         .notif-header-title i { color: #ff4757; }
 
         .notif-box {
             background: rgba(255, 255, 255, 0.02);
-            border: 1px solid rgba(255, 255, 255, 0.05);
+            border: 1px solid var(--border-color);
             border-radius: 16px;
             padding: 20px;
             display: flex;
@@ -498,9 +556,17 @@
             transition: all 0.3s ease;
         }
 
+        [data-theme="light"] .notif-box {
+            background: rgba(0, 0, 0, 0.01);
+        }
+
         .notif-box:hover {
             background: rgba(255, 255, 255, 0.04);
             border-color: rgba(255, 71, 87, 0.2);
+        }
+
+        [data-theme="light"] .notif-box:hover {
+            background: rgba(0, 0, 0, 0.03);
         }
 
         .notif-sender-img {
@@ -521,7 +587,7 @@
         .notif-sender-name {
             font-size: 1.05rem;
             font-weight: 800;
-            color: #ffffff;
+            color: var(--text-color);
             display: flex;
             align-items: center;
             gap: 5px;
@@ -531,7 +597,7 @@
 
         .notif-message {
             font-size: 0.95rem;
-            color: #cbd5e1;
+            color: var(--text-desc);
             line-height: 1.6;
         }
 
@@ -554,12 +620,13 @@
         }
 
         .about-card {
-            background: #121826;
+            background: var(--container-bg);
             border-radius: 24px;
-            border: 1px solid rgba(255, 255, 255, 0.05);
+            border: 1px solid var(--border-color);
             padding: 40px 25px;
             text-align: center;
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+            transition: background-color 0.5s ease;
         }
 
         .profile-wrapper {
@@ -585,7 +652,7 @@
             gap: 8px;
             font-size: 1.8rem;
             font-weight: 800;
-            color: #ffffff;
+            color: var(--text-color);
             margin-bottom: 15px;
         }
 
@@ -593,7 +660,7 @@
 
         .about-desc {
             font-size: 1.05rem;
-            color: #cbd5e1;
+            color: var(--text-desc);
             line-height: 1.7;
             margin-bottom: 30px;
         }
@@ -671,6 +738,9 @@
     <nav>
         <div class="logo" onclick="showMainPage()">PandaVgk</div>
         <div class="nav-actions">
+            <button class="nav-btn" onclick="toggleTheme()" id="theme-toggle-btn" title="Ubah Tema">
+                <i class="fa-solid fa-moon"></i>
+            </button>
             <button class="nav-btn" onclick="showNotificationPage()" title="Notifikasi">
                 <i class="fa-solid fa-bell"></i>
                 <div id="notif-badge" class="notification-badge"></div>
@@ -818,6 +888,31 @@
     </div>
 
     <script>
+        // --- KONFIGURASI LINK REDIRECT ---
+        // Isi / ganti URL di bawah ini sesuai dengan link unduhan Anda bray!
+        const DOWNLOAD_REDIRECT_URL = "https://your-download-link-here.com";
+
+        function triggerDownload() {
+            // Membuka tautan langsung di tab baru secara aman
+            window.open(DOWNLOAD_REDIRECT_URL, '_blank');
+        }
+
+        // --- DARK / LIGHT THEME TOGGLE SYSTEM ---
+        function toggleTheme() {
+            const currentTheme = document.documentElement.getAttribute('data-theme');
+            const themeBtn = document.getElementById('theme-toggle-btn');
+            
+            if (currentTheme === 'light') {
+                document.documentElement.setAttribute('data-theme', 'dark');
+                themeBtn.innerHTML = '<i class="fa-solid fa-moon"></i>';
+                localStorage.setItem('theme', 'dark');
+            } else {
+                document.documentElement.setAttribute('data-theme', 'light');
+                themeBtn.innerHTML = '<i class="fa-solid fa-sun"></i>';
+                localStorage.setItem('theme', 'light');
+            }
+        }
+
         // --- TIMEOUT AGO TRACKER ---
         function updateTimeAgo() {
             const items = document.querySelectorAll('.grid-item');
@@ -851,6 +946,14 @@
         }
 
         document.addEventListener("DOMContentLoaded", () => {
+            // Cek preferensi tema yang tersimpan sebelumnya
+            const savedTheme = localStorage.getItem('theme') || 'dark';
+            document.documentElement.setAttribute('data-theme', savedTheme);
+            const themeBtn = document.getElementById('theme-toggle-btn');
+            if (savedTheme === 'light') {
+                themeBtn.innerHTML = '<i class="fa-solid fa-sun"></i>';
+            }
+
             updateTimeAgo();
             setInterval(updateTimeAgo, 30000);
 
@@ -914,10 +1017,6 @@
             if (badge) badge.style.display = 'none';
             window.scrollTo({ top: 0, behavior: 'smooth' });
         }
-
-        function triggerDownload() {
-            alert('Mengalihkan ke server unduhan aman PandaVgk... Silakan unduh file Anda!');
-        }
     </script>
 
     <script type="text/javascript">
@@ -931,5 +1030,5 @@
     s0.parentNode.insertBefore(s1,s0);
     })();
     </script>
-    </body>
+</body>
 </html>
