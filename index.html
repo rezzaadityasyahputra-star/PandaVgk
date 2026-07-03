@@ -1,0 +1,1218 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PandaVgk</title>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        /* --- RESET & BASE STYLES --- */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Plus Jakarta Sans', sans-serif;
+        }
+
+        body {
+            background-color: #0b0f19;
+            color: #ffffff;
+            overflow-x: hidden;
+        }
+
+        /* --- NAVBAR --- */
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 4%;
+            background: rgba(11, 15, 25, 0.8);
+            backdrop-filter: blur(12px);
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            z-index: 1000;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            animation: fadeInDown 0.8s ease;
+        }
+
+        .logo {
+            font-size: 22px;
+            font-weight: 800;
+            letter-spacing: 1px;
+            background: linear-gradient(45deg, #ff4757, #ff6b81);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            cursor: pointer;
+            transition: transform 0.3s ease;
+        }
+
+        .logo:hover {
+            transform: scale(1.05);
+        }
+
+        .nav-actions {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .nav-btn {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            color: #ffffff;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1rem;
+            cursor: pointer;
+            position: relative;
+            transition: all 0.3s ease;
+        }
+
+        .nav-btn:hover {
+            background: #ff4757;
+            border-color: #ff4757;
+            box-shadow: 0 0 15px rgba(255, 71, 87, 0.4);
+            transform: scale(1.05);
+        }
+
+        /* Titik Merah Notifikasi */
+        .notification-badge {
+            position: absolute;
+            top: 2px;
+            right: 2px;
+            width: 10px;
+            height: 10px;
+            background-color: #ff4757;
+            border-radius: 50%;
+            border: 2px solid #0b0f19;
+        }
+
+        /* --- MAIN CONTAINER --- */
+        .container {
+            max-width: 1400px;
+            margin: 90px auto 60px auto;
+            padding: 0 4%;
+        }
+
+        /* --- HERO BANNER --- */
+        .banner-container {
+            width: 100%;
+            position: relative;
+            height: 350px; 
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.5);
+            animation: zoomIn 1s ease;
+        }
+
+        .banner-image {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            filter: brightness(0.55) contrast(1.1);
+            transition: transform 1s ease;
+        }
+
+        .banner-container:hover .banner-image {
+            transform: scale(1.04);
+        }
+
+        .banner-content {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-end; 
+            align-items: flex-start;  
+            text-align: left;         
+            padding: 30px 40px;       
+            z-index: 2;
+        }
+
+        .banner-title {
+            font-size: 2.2rem;
+            font-weight: 800;
+            margin-bottom: 0;          
+            text-shadow: 0 4px 20px rgba(0,0,0,0.8);
+            letter-spacing: 1px;
+            line-height: 1.3;
+            animation: fadeInUp 1s ease 0.2s both;
+        }
+
+        /* --- SECTION TITLE WITH LINES --- */
+        .section-divider {
+            display: flex;
+            align-items: center;
+            margin: 60px 0 40px 0;
+            animation: fadeIn 1.2s ease;
+        }
+
+        .line {
+            flex: 1;
+            height: 2px;
+        }
+
+        .line-left {
+            background: linear-gradient(90deg, transparent, #ff4757);
+        }
+
+        .line-right {
+            background: linear-gradient(90deg, #ff4757, transparent);
+        }
+
+        .section-title {
+            font-size: 1.8rem;
+            font-weight: 800;
+            padding: 0 25px;
+            letter-spacing: 4px;
+            color: #ffffff;
+            text-shadow: 0 0 15px rgba(255, 71, 87, 0.4);
+            text-align: center;
+        }
+
+        /* --- GRID CONTENT (RESPONSIVE) --- */
+        .vgk-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+            gap: 30px;
+            margin-bottom: 60px;
+        }
+
+        .grid-item {
+            background: #121826;
+            border-radius: 20px;
+            overflow: hidden;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            transition: all 0.5s cubic-bezier(0.165, 0.84, 0.44, 1);
+            opacity: 0;
+            transform: translateY(40px);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.3);
+        }
+
+        .grid-item.show {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .grid-item:hover {
+            transform: translateY(-8px);
+            border-color: rgba(255, 71, 87, 0.4);
+            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.6), 0 0 30px rgba(255, 71, 87, 0.15);
+        }
+
+        .grid-item-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 12px 16px;
+            background: #161d2f;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.03);
+        }
+
+        .grid-creator {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .grid-creator-img {
+            width: 26px;
+            height: 26px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .grid-creator-name {
+            font-size: 0.85rem;
+            font-weight: 700;
+            color: #ffffff;
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+
+        .grid-creator-name i {
+            color: #1e90ff;
+            font-size: 0.8rem;
+        }
+
+        .grid-time-info {
+            font-size: 0.8rem;
+            color: #a4b0be;
+            font-weight: 600;
+            background: rgba(255, 255, 255, 0.05);
+            padding: 4px 10px;
+            border-radius: 20px;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .item-banner {
+            width: 100%;
+            height: 240px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .item-img {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.8s ease;
+        }
+
+        .grid-item:hover .item-img {
+            transform: scale(1.03);
+        }
+
+        .item-details {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            padding: 25px;
+            background: linear-gradient(to top, #0d121f, #121826);
+            border-top: 1px solid rgba(255, 255, 255, 0.02);
+        }
+
+        .item-info h3 {
+            font-size: 1.3rem;
+            font-weight: 700;
+            margin-bottom: 6px;
+            color: #ffffff;
+        }
+
+        .item-info p {
+            font-size: 0.95rem;
+            color: #a4b0be;
+        }
+
+        .btn-continue {
+            background: rgba(255, 255, 255, 0.03);
+            color: #ffffff;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            padding: 12px 24px;
+            font-size: 0.95rem;
+            font-weight: 700;
+            border-radius: 12px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            transition: all 0.3s ease;
+            width: 100%;
+        }
+
+        .btn-continue i { transition: transform 0.3s ease; }
+        .grid-item:hover .btn-continue {
+            background: #ff4757;
+            border-color: #ff4757;
+            box-shadow: 0 6px 20px rgba(255, 71, 87, 0.4);
+        }
+        .grid-item:hover .btn-continue i { transform: translateX(6px); }
+
+        /* --- DETAIL PAGE COMPONENT --- */
+        #detail-page {
+            display: none;
+            animation: fadeIn 0.6s ease;
+        }
+
+        .btn-back {
+            background: none;
+            border: none;
+            color: #a4b0be;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 25px;
+            transition: color 0.3s ease;
+        }
+
+        .btn-back:hover { color: #ff4757; }
+
+        .detail-banner {
+            width: 100%;
+            height: 350px;
+            border-radius: 20px;
+            overflow: hidden;
+            position: relative;
+            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.5);
+            margin-bottom: 30px;
+        }
+
+        .detail-banner img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .detail-info-box {
+            background: #121826;
+            border-radius: 20px;
+            padding: 30px 20px;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .detail-title {
+            font-size: 2rem;
+            font-weight: 800;
+            margin-bottom: 15px;
+            color: #ffffff;
+        }
+
+        .detail-desc {
+            font-size: 1.05rem;
+            color: #cbd5e1;
+            line-height: 1.7;
+            margin-bottom: 30px;
+            background: rgba(255, 255, 255, 0.02);
+            padding: 15px 20px;
+            border-left: 4px solid #ff4757;
+            border-radius: 4px 12px 12px 4px;
+        }
+
+        /* --- WRAPPER TABLE RESPONSIF --- */
+        .table-responsive {
+            width: 100%;
+            overflow-x: auto;
+            -webkit-overflow-scrolling: touch;
+            border-radius: 12px;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            margin-top: 20px;
+        }
+
+        .download-table {
+            width: 100%;
+            border-collapse: collapse;
+            background: #0d121f;
+            min-width: 600px; 
+        }
+
+        .download-table th, .download-table td { 
+            padding: 15px 20px; 
+            text-align: left; 
+        }
+        
+        .download-table th {
+            background: rgba(255, 255, 255, 0.03);
+            font-size: 1rem;
+            font-weight: 700;
+            color: #a4b0be;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+        }
+
+        .download-table td { 
+            border-bottom: 1px solid rgba(255, 255, 255, 0.03); 
+            font-size: 1rem; 
+        }
+
+        .brand-verified {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-weight: 800;
+            color: #ffffff;
+            letter-spacing: 0.5px;
+        }
+
+        .brand-verified i { color: #1e90ff; font-size: 1.1rem; }
+
+        .btn-download-link {
+            background: linear-gradient(135deg, #2ed573, #26af5f);
+            color: white;
+            text-decoration: none;
+            padding: 10px 20px;
+            font-weight: 700;
+            border-radius: 10px;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            box-shadow: 0 5px 15px rgba(46, 213, 115, 0.2);
+            transition: all 0.3s ease;
+            border: none;
+            cursor: pointer;
+            font-size: 0.95rem;
+        }
+
+        .btn-download-link:hover { 
+            transform: translateY(-2px); 
+            box-shadow: 0 8px 20px rgba(46, 213, 115, 0.4); 
+        }
+
+        /* --- LIVE CHAT PAGE --- */
+        #chat-page {
+            display: none;
+            animation: fadeInUp 0.6s ease;
+        }
+
+        .chat-container {
+            max-width: 800px;
+            margin: 30px auto;
+            background: #121826;
+            border-radius: 24px;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            display: flex;
+            flex-direction: column;
+            height: 600px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+            overflow: hidden;
+        }
+
+        .chat-header {
+            padding: 20px;
+            background: #161d2f;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .chat-header-info h3 {
+            font-size: 1.1rem;
+            font-weight: 800;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .chat-header-info h3 i { color: #1e90ff; font-size: 0.95rem; }
+
+        .chat-header-info p {
+            font-size: 0.85rem;
+            color: #2ed573;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            margin-top: 2px;
+        }
+
+        .chat-header-info p::before {
+            content: '';
+            width: 8px;
+            height: 8px;
+            background: #2ed573;
+            border-radius: 50%;
+            display: inline-block;
+        }
+
+        .chat-messages {
+            flex: 1;
+            padding: 25px;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            background: #0d121f;
+        }
+
+        .msg-row {
+            display: flex;
+            gap: 12px;
+            max-width: 75%;
+        }
+
+        .msg-row.incoming { align-self: flex-start; }
+        .msg-row.outgoing { align-self: flex-end; flex-direction: row-reverse; }
+
+        .msg-avatar {
+            width: 38px;
+            height: 38px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 2px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .msg-bubble {
+            padding: 14px 18px;
+            border-radius: 18px;
+            font-size: 0.95rem;
+            line-height: 1.5;
+        }
+
+        .incoming .msg-bubble {
+            background: #161d2f;
+            color: #cbd5e1;
+            border-top-left-radius: 4px;
+            border: 1px solid rgba(255, 255, 255, 0.03);
+        }
+
+        .outgoing .msg-bubble {
+            background: linear-gradient(135deg, #ff4757, #ff6b81);
+            color: #ffffff;
+            border-top-right-radius: 4px;
+            box-shadow: 0 5px 15px rgba(255, 71, 87, 0.2);
+        }
+
+        .msg-meta {
+            font-size: 0.75rem;
+            color: #747d8c;
+            margin-top: 5px;
+            font-weight: 600;
+            display: block;
+        }
+        .outgoing .msg-meta { text-align: right; color: rgba(255, 255, 255, 0.6); }
+
+        .chat-input-area {
+            padding: 15px 20px;
+            background: #161d2f;
+            border-top: 1px solid rgba(255, 255, 255, 0.05);
+            display: flex;
+            gap: 12px;
+            align-items: center;
+        }
+
+        .chat-input-area input {
+            flex: 1;
+            background: #0d121f;
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            padding: 14px 20px;
+            border-radius: 14px;
+            color: #ffffff;
+            font-size: 0.95rem;
+            outline: none;
+            transition: border-color 0.3s ease;
+        }
+
+        .chat-input-area input:focus { border-color: #ff4757; }
+
+        .btn-send-chat {
+            background: #ff4757;
+            color: white;
+            border: none;
+            width: 48px;
+            height: 48px;
+            border-radius: 14px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.1rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 5px 15px rgba(255, 71, 87, 0.3);
+        }
+
+        .btn-send-chat:hover {
+            background: #ff6b81;
+            transform: scale(1.03);
+        }
+
+        /* --- NOTIFICATION PAGE --- */
+        #notification-page {
+            display: none;
+            animation: fadeInUp 0.6s ease;
+        }
+
+        .notif-container {
+            max-width: 700px;
+            margin: 40px auto;
+            background: #121826;
+            border-radius: 24px;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            padding: 30px 25px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+        }
+
+        .notif-header-title {
+            font-size: 1.6rem;
+            font-weight: 800;
+            margin-bottom: 25px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            color: #ffffff;
+        }
+
+        .notif-header-title i {
+            color: #ff4757;
+        }
+
+        .notif-box {
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            border-radius: 16px;
+            padding: 20px;
+            display: flex;
+            gap: 15px;
+            align-items: flex-start;
+            transition: all 0.3s ease;
+        }
+
+        .notif-box:hover {
+            background: rgba(255, 255, 255, 0.04);
+            border-color: rgba(255, 71, 87, 0.2);
+        }
+
+        .notif-sender-img {
+            width: 45px;
+            height: 45px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 2px solid #ff4757;
+            flex-shrink: 0;
+        }
+
+        .notif-content {
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+        }
+
+        .notif-sender-name {
+            font-size: 1.05rem;
+            font-weight: 800;
+            color: #ffffff;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .notif-sender-name i {
+            color: #1e90ff;
+            font-size: 0.95rem;
+        }
+
+        .notif-message {
+            font-size: 0.95rem;
+            color: #cbd5e1;
+            line-height: 1.6;
+        }
+
+        .notif-time {
+            font-size: 0.8rem;
+            color: #747d8c;
+            margin-top: 4px;
+            font-weight: 600;
+        }
+
+        /* --- ABOUT COMPONENT --- */
+        #about-page {
+            display: none;
+            animation: fadeInUp 0.6s ease;
+        }
+
+        .about-grid {
+            max-width: 600px;
+            margin: 40px auto;
+        }
+
+        .about-card {
+            background: #121826;
+            border-radius: 24px;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            padding: 40px 25px;
+            text-align: center;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+        }
+
+        .profile-wrapper {
+            position: relative;
+            width: 120px;
+            height: 120px;
+            margin: 0 auto 20px auto;
+        }
+
+        .profile-img {
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 4px solid #ff4757;
+            box-shadow: 0 0 25px rgba(255, 71, 87, 0.3);
+        }
+
+        .about-brand-title {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            font-size: 1.8rem;
+            font-weight: 800;
+            color: #ffffff;
+            margin-bottom: 15px;
+        }
+
+        .about-brand-title i {
+            color: #1e90ff;
+            font-size: 1.5rem;
+        }
+
+        .about-desc {
+            font-size: 1.05rem;
+            color: #cbd5e1;
+            line-height: 1.7;
+            margin-bottom: 30px;
+        }
+
+        .btn-home {
+            background: linear-gradient(135deg, #ff4757, #ff6b81);
+            color: white;
+            border: none;
+            padding: 14px 35px;
+            font-size: 1rem;
+            font-weight: 700;
+            border-radius: 35px;
+            cursor: pointer;
+            box-shadow: 0 10px 25px rgba(255, 71, 87, 0.4);
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            transition: all 0.3s ease;
+            text-decoration: none;
+        }
+
+        .btn-home:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 15px 30px rgba(255, 71, 87, 0.6);
+        }
+
+        /* --- ANIMATIONS KEYFRAMES --- */
+        @keyframes fadeInDown {
+            from { opacity: 0; transform: translateY(-20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        @keyframes zoomIn {
+            from { opacity: 0; transform: scale(0.95); }
+            to { opacity: 1; transform: scale(1); }
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        /* --- MEDIA QUERIES --- */
+        @media (max-width: 768px) {
+            nav { padding: 12px 5%; }
+            .logo { font-size: 20px; }
+            .container { margin-top: 80px; padding: 0 5%; }
+            .banner-container { height: 220px; }
+            .banner-content { padding: 15px 20px; }
+            .banner-title { font-size: 1.3rem; }
+            .section-divider { margin: 40px 0 25px 0; }
+            .section-title { font-size: 1.3rem; padding: 0 15px; letter-spacing: 2px; }
+            .vgk-grid { gap: 20px; }
+            .item-banner { height: 200px; }
+            .detail-banner { height: 220px; }
+            .detail-title { font-size: 1.6rem; }
+            .detail-desc { font-size: 0.95rem; padding: 12px 15px; }
+            .notif-container { padding: 20px 15px; }
+            .chat-container { height: 500px; }
+            .msg-row { max-width: 85%; }
+        }
+
+        @media (min-width: 769px) {
+            .item-details {
+                flex-direction: row;
+                justify-content: space-between;
+                align-items: center;
+            }
+            .btn-continue {
+                width: auto;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <nav>
+        <div class="logo" onclick="showMainPage()">PandaVgk</div>
+        <div class="nav-actions">
+            <button class="nav-btn" onclick="showChatPage()" title="Live Chat">
+                <i class="fa-solid fa-comments"></i>
+            </button>
+            <button class="nav-btn" onclick="showNotificationPage()" title="Notifikasi">
+                <i class="fa-solid fa-bell"></i>
+                <div id="notif-badge" class="notification-badge"></div>
+            </button>
+            <button class="nav-btn" onclick="showAboutPage()" title="Tentang Kreator">
+                <i class="fa-solid fa-user"></i>
+            </button>
+        </div>
+    </nav>
+
+    <div class="container">
+        
+        <div id="main-page">
+            <div class="banner-container">
+                <img src="https://i.ibb.co/kVB3MfKB/Gemini-Generated-Image-xpm2d0xpm2d0xpm2.png" alt="PandaVgk Banner" class="banner-image">
+                <div class="banner-content">
+                    <h1 class="banner-title">VGK GRATIS NIH DI WEB PANDAVGK AJA</h1>
+                </div>
+            </div>
+
+            <div class="section-divider">
+                <div class="line line-left"></div>
+                <div class="section-title">ALL VGK</div>
+                <div class="line line-right"></div>
+            </div>
+
+            <div class="vgk-grid">
+                <div class="grid-item" data-timestamp="2026-07-02T19:42:00">
+                    <div class="grid-item-header">
+                        <div class="grid-creator">
+                            <img src="https://i.ibb.co.com/4RhtrrDM/image.png" alt="PandaVgk Profil" class="grid-creator-img">
+                            <span class="grid-creator-name">PandaVgk <i class="fa-solid fa-circle-check"></i></span>
+                        </div>
+                        <div class="grid-time-info">
+                            <i class="fa-regular fa-clock"></i> <span class="time-ticker">Menghitung...</span>
+                        </div>
+                    </div>
+
+                    <div class="item-banner">
+                        <img src="https://i.ibb.co.com/7xZSxLnY/Gemini-Generated-Image-l0qosml0qosml0qo.png" alt="VGK Pack 1" class="item-img">
+                    </div>
+                    <div class="item-details">
+                        <div class="item-info">
+                            <h3>Vgk Satuan 2026</h3>
+                            <p>Vgk Random 2026 Buruan sebelum expired • Gratis</p>
+                        </div>
+                        <button class="btn-continue" data-title="Vgk Satuan 2026" data-img="https://i.ibb.co/kVB3MfKB/Gemini-Generated-Image-xpm2d0xpm2d0xpm2.png">
+                            Lanjutkan <i class="fa-solid fa-arrow-right"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div id="detail-page">
+            <button class="btn-back" onclick="showMainPage()">
+                <i class="fa-solid fa-arrow-left"></i> Kembali ke Beranda
+            </button>
+
+            <div class="detail-banner">
+                <img id="target-detail-img" src="" alt="Detail VGK">
+            </div>
+
+            <div class="detail-info-box">
+                <h2 id="target-detail-title" class="detail-title">Vgk Satuan 2026</h2>
+                
+                <p class="detail-desc">
+                    Ayo euy nih vgk gratis, terbaik sepanjang masa, dan terbaru 2026, dan hanya ada di pandaVgk Bray!.
+                </p>
+
+                <div class="table-responsive">
+                    <table class="download-table">
+                        <thead>
+                            <tr>
+                                <th>Kreator / Sumber</th>
+                                <th>Status Akses</th>
+                                <th>Tautan Langsung</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>
+                                    <div class="brand-verified">
+                                        PANDAVGK <i class="fa-solid fa-circle-check"></i>
+                                    </div>
+                                </td>
+                                <td><span style="color: #2ed573; font-weight: 600;"><i class="fa-solid fa-unlock"></i> Siap Diunduh</span></td>
+                                <td>
+                                    <button class="btn-download-link" onclick="triggerDownload()">
+                                        Buka Link Unduhan <i class="fa-solid fa-download"></i>
+                                    </button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <div id="chat-page">
+            <button class="btn-back" onclick="showMainPage()">
+                <i class="fa-solid fa-arrow-left"></i> Kembali ke Beranda
+            </button>
+
+            <div class="chat-container">
+                <div class="chat-header">
+                    <img src="https://i.ibb.co.com/4RhtrrDM/image.png" alt="PandaVgk Admin" class="grid-creator-img" style="width: 40px; height: 40px;">
+                    <div class="chat-header-info">
+                        <h3>PandaVgk Chatroom <i class="fa-solid fa-circle-check"></i></h3>
+                        <p>Kreator Online</p>
+                    </div>
+                </div>
+
+                <div class="chat-messages" id="chat-box-messages">
+                    <div class="msg-row incoming">
+                        <img src="https://i.ibb.co.com/4RhtrrDM/image.png" alt="PandaVgk Avatar" class="msg-avatar">
+                        <div>
+                            <div class="msg-bubble">
+                                Halo bray! Selamat datang di Live Chat PandaVgk. Ada yang bisa dibantu atau mau request mentahan VGK apa nih? 🤖🔥
+                            </div>
+                            <span class="msg-meta">PandaVgk • Baru saja</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="chat-input-area">
+                    <input type="text" id="input-chat-message" placeholder="Ketik pesan Anda di sini, bray...">
+                    <button class="btn-send-chat" onclick="sendUserMessage()">
+                        <i class="fa-solid fa-paper-plane"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <div id="notification-page">
+            <button class="btn-back" onclick="showMainPage()">
+                <i class="fa-solid fa-arrow-left"></i> Kembali ke Beranda
+            </button>
+
+            <div class="notif-container">
+                <h2 class="notif-header-title"><i class="fa-solid fa-bell"></i> Kotak Masuk Notifikasi</h2>
+                
+                <div class="notif-box">
+                    <img src="https://i.ibb.co.com/4RhtrrDM/image.png" alt="PandaVgk Logo" class="notif-sender-img">
+                    <div class="notif-content">
+                        <span class="notif-sender-name">
+                            PandaVgk <i class="fa-solid fa-circle-check" title="Verified"></i>
+                        </span>
+                        <p class="notif-message">
+                            Maaf Tadi saya tidak Upload karena bahan stok Vgk habis hehehe 🗿
+                        </p>
+                        <span class="notif-time">Baru saja</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div id="about-page">
+            <div class="about-grid">
+                <div class="about-card">
+                    <div class="profile-wrapper">
+                        <img src="https://i.ibb.co.com/4RhtrrDM/image.png" alt="PandaVgk Profile" class="profile-img">
+                    </div>
+                    
+                    <h2 class="about-brand-title">
+                        PANDAVGK <i class="fa-solid fa-circle-check" title="Verified Creator"></i>
+                    </h2>
+                    
+                    <p class="about-desc">
+                        Website ini dibuat dari ide-ide sederhana untuk membagikan Video VGK pilihan terbaik secara gratis dan mudah diakses oleh semua orang.
+                    </p>
+                    
+                    <button class="btn-home" onclick="showMainPage()">
+                        <i class="fa-solid fa-house"></i> Beranda Utama
+                    </button>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <script>
+        // --- FUNCTION: REALTIME TIME AGO TRACKER ---
+        function updateTimeAgo() {
+            const items = document.querySelectorAll('.grid-item');
+            
+            items.forEach(item => {
+                const timestampAttr = item.getAttribute('data-timestamp');
+                if (!timestampAttr) return;
+
+                const createdTime = new Date(timestampAttr);
+                const now = new Date();
+                const diffInSeconds = Math.floor((now - createdTime) / 1000);
+                
+                let timeText = "baru saja";
+
+                if (diffInSeconds >= 60) {
+                    const diffInMinutes = Math.floor(diffInSeconds / 60);
+                    if (diffInMinutes < 60) {
+                        timeText = `${diffInMinutes} menit lalu`;
+                    } else {
+                        const diffInHours = Math.floor(diffInMinutes / 60);
+                        if (diffInHours < 24) {
+                            timeText = `${diffInHours} jam lalu`;
+                        } else {
+                            const diffInDays = Math.floor(diffInHours / 24);
+                            timeText = `${diffInDays} hari lalu`;
+                        }
+                    }
+                }
+
+                const tickerSpan = item.querySelector('.time-ticker');
+                if (tickerSpan) {
+                    tickerSpan.innerText = timeText;
+                }
+            });
+        }
+
+        document.addEventListener("DOMContentLoaded", () => {
+            updateTimeAgo();
+            setInterval(updateTimeAgo, 30000);
+
+            const gridItems = document.querySelectorAll('.grid-item');
+            
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach((entry, index) => {
+                    if (entry.isIntersecting) {
+                        setTimeout(() => {
+                            entry.target.classList.add('show');
+                        }, index * 100); 
+                        observer.unobserve(entry.target);
+                    }
+                });
+            }, {
+                threshold: 0.05
+            });
+
+            gridItems.forEach(item => {
+                observer.observe(item);
+            });
+
+            const buttons = document.querySelectorAll('.btn-continue');
+            buttons.forEach(btn => {
+                btn.addEventListener('click', function() {
+                    const titleData = this.getAttribute('data-title');
+                    const imgData = this.getAttribute('data-img');
+
+                    document.getElementById('target-detail-title').innerText = titleData;
+                    document.getElementById('target-detail-img').src = imgData;
+
+                    this.style.transform = 'scale(0.95)';
+                    setTimeout(() => {
+                        this.style.transform = 'none';
+                        hideAllPages();
+                        document.getElementById('detail-page').style.display = 'block';
+                        window.scrollTo({ top: 0, behavior: 'smooth' });
+                    }, 150);
+                });
+            });
+
+            // Menjalankan kirim chat saat menekan tombol Enter di keyboard
+            const chatInput = document.getElementById('input-chat-message');
+            if (chatInput) {
+                chatInput.addEventListener('keypress', function(e) {
+                    if (e.key === 'Enter') {
+                        sendUserMessage();
+                    }
+                });
+            }
+        });
+
+        // Helper untuk menyembunyikan semua halaman komponen dinamis
+        function hideAllPages() {
+            document.getElementById('main-page').style.display = 'none';
+            document.getElementById('detail-page').style.display = 'none';
+            document.getElementById('about-page').style.display = 'none';
+            document.getElementById('notification-page').style.display = 'none';
+            document.getElementById('chat-page').style.display = 'none';
+        }
+
+        function showMainPage() {
+            hideAllPages();
+            document.getElementById('main-page').style.display = 'block';
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        function showAboutPage() {
+            hideAllPages();
+            document.getElementById('about-page').style.display = 'block';
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        function showNotificationPage() {
+            hideAllPages();
+            document.getElementById('notification-page').style.display = 'block';
+            
+            // Menghilangkan titik merah penanda setelah user membuka halaman notifikasi
+            const badge = document.getElementById('notif-badge');
+            if (badge) {
+                badge.style.display = 'none';
+            }
+            
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        // Fungsi menampilkan halaman live chat terbaru
+        function showChatPage() {
+            hideAllPages();
+            document.getElementById('chat-page').style.display = 'block';
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+            
+            // Auto-scroll ke bagian chat paling bawah saat halaman dibuka
+            const chatBox = document.getElementById('chat-box-messages');
+            chatBox.scrollTop = chatBox.scrollHeight;
+        }
+
+        // Fungsi interaktif mengirim pesan di ruang obrolan
+        function sendUserMessage() {
+            const inputElement = document.getElementById('input-chat-message');
+            const messageText = inputElement.value.trim();
+            
+            if (messageText === '') return;
+
+            const chatMessagesContainer = document.getElementById('chat-box-messages');
+
+            // Template struktur balon pesan kiriman user (kanan)
+            const msgRow = document.createElement('div');
+            msgRow.className = 'msg-row outgoing';
+            
+            msgRow.innerHTML = `
+                <div>
+                    <div class="msg-bubble">
+                        ${messageText}
+                    </div>
+                    <span class="msg-meta">Anda • Baru saja</span>
+                </div>
+            `;
+
+            chatMessagesContainer.appendChild(msgRow);
+            
+            // Mengosongkan kolom input setelah terkirim
+            inputElement.value = '';
+            
+            // Otomatis gulir kebawah setelah ada pesan baru masuk
+            chatMessagesContainer.scrollTop = chatMessagesContainer.scrollHeight;
+
+            // Simulasi respon otomatis dari sistem/admin PandaVgk biar makin hidup bray!
+            setTimeout(() => {
+                const autoReplyRow = document.createElement('div');
+                autoReplyRow.className = 'msg-row incoming';
+                autoReplyRow.innerHTML = `
+                    <img src="https://i.ibb.co.com/4RhtrrDM/image.png" alt="PandaVgk Avatar" class="msg-avatar">
+                    <div>
+                        <div class="msg-bubble">
+                            Pesanmu sudah terkirim bray! Tunggu admin baca atau langsung cek update VGK berkala di beranda ya 🗿👍
+                        </div>
+                        <span class="msg-meta">PandaVgk • Baru saja</span>
+                    </div>
+                `;
+                chatMessagesContainer.appendChild(autoReplyRow);
+                chatMessagesContainer.scrollTop = chatMessagesContainer.scrollHeight;
+            }, 1200);
+        }
+
+        function triggerDownload() {
+            alert('Mengalihkan ke server unduhan aman PandaVgk... Silakan unduh file Anda!');
+        }
+    </script>
+</body>
+</html>
