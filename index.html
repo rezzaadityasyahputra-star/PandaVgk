@@ -3,12 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>PandaVgk</title>
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    
+    <title>PANDAVGK HUB</title>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;800&display=swap" rel="stylesheet">
     <style>
-        /* --- RESET & BASE STYLES --- */
+        /* --- RESET & ROOT STYLE --- */
         * {
             margin: 0;
             padding: 0;
@@ -16,1019 +14,356 @@
             font-family: 'Plus Jakarta Sans', sans-serif;
         }
 
-        /* Root Variabel Warna untuk mempermudah Theme Toggle */
-        :root {
-            --bg-color: #0b0f19;
-            --container-bg: #121826;
-            --header-bg: #161d2f;
-            --text-color: #ffffff;
-            --text-muted: #a4b0be;
-            --text-desc: #cbd5e1;
-            --nav-bg: rgba(11, 15, 25, 0.8);
-            --border-color: rgba(255, 255, 255, 0.05);
-            --table-bg: #0d121f;
-        }
-
-        /* Variabel Terang (Light Mode) */
-        [data-theme="light"] {
-            --bg-color: #f1f2f6;
-            --container-bg: #ffffff;
-            --header-bg: #f5f6fa;
-            --text-color: #2f3542;
-            --text-muted: #747d8c;
-            --text-desc: #57606f;
-            --nav-bg: rgba(241, 242, 246, 0.8);
-            --border-color: rgba(0, 0, 0, 0.08);
-            --table-bg: #f8f9fa;
-        }
-
         body {
-            background-color: var(--bg-color);
-            color: var(--text-color);
+            background-color: #ffffff;
+            color: #000000;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 2rem 1rem;
             overflow-x: hidden;
-            /* Animasi transisi perubahan warna background & teks */
-            transition: background-color 0.5s cubic-bezier(0.4, 0, 0.2, 1), color 0.5s ease;
         }
 
-        /* --- NAVBAR --- */
-        nav {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 15px 4%;
-            background: var(--nav-bg);
-            backdrop-filter: blur(12px);
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            z-index: 1000;
-            border-bottom: 1px solid var(--border-color);
-            animation: fadeInDown 0.8s ease;
-            transition: background 0.5s ease, border-bottom 0.5s ease;
+        /* --- HEADER --- */
+        header {
+            text-align: center;
+            margin-bottom: 3rem;
+            animation: fadeInDown 0.8s ease-out;
         }
 
-        .logo {
-            font-size: 22px;
+        header h1 {
+            font-size: 2.5rem;
             font-weight: 800;
-            letter-spacing: 1px;
-            background: linear-gradient(45deg, #ff4757, #ff6b81);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            cursor: pointer;
-            transition: transform 0.3s ease;
-        }
-
-        .logo:hover {
-            transform: scale(1.05);
-        }
-
-        .nav-actions {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-        }
-
-        .nav-btn {
-            background: rgba(255, 255, 255, 0.05);
-            border: 1px solid var(--border-color);
-            color: var(--text-color);
-            width: 40px;
-            height: 40px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 1rem;
-            cursor: pointer;
-            position: relative;
-            transition: all 0.3s ease;
-        }
-
-        /* Style khusus tombol theme di light mode agar kontras */
-        [data-theme="light"] .nav-btn {
-            background: rgba(0, 0, 0, 0.05);
-        }
-
-        .nav-btn:hover {
-            background: #ff4757;
-            border-color: #ff4757;
-            color: #ffffff;
-            box-shadow: 0 0 15px rgba(255, 71, 87, 0.4);
-            transform: scale(1.05);
-        }
-
-        .notification-badge {
-            position: absolute;
-            top: 2px;
-            right: 2px;
-            width: 10px;
-            height: 10px;
-            background-color: #ff4757;
-            border-radius: 50%;
-            border: 2px solid var(--bg-color);
+            letter-spacing: 4px;
+            color: #000000;
+            text-transform: uppercase;
         }
 
         /* --- MAIN CONTAINER --- */
-        .container {
-            max-width: 1400px;
-            margin: 90px auto 60px auto;
-            padding: 0 4%;
-        }
-
-        /* --- HERO BANNER --- */
-        .banner-container {
+        main {
             width: 100%;
-            position: relative;
-            height: 350px; 
-            border-radius: 20px;
-            overflow: hidden;
-            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.3);
-            animation: zoomIn 1s ease;
-        }
-
-        .banner-image {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            filter: brightness(0.55) contrast(1.1);
-            transition: transform 1s ease;
-        }
-
-        .banner-container:hover .banner-image {
-            transform: scale(1.04);
-        }
-
-        .banner-content {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
+            max-width: 800px;
             display: flex;
             flex-direction: column;
-            justify-content: flex-end; 
-            align-items: flex-start;  
-            text-align: left;         
-            padding: 30px 40px;       
+            gap: 3.5rem;
+        }
+
+        /* --- GRID BANNER (YT THUMBNAIL STYLE) --- */
+        .banner-container {
+            animation: fadeInUp 0.8s ease-out 0.2s both;
+        }
+
+        .grid-banner {
+            position: relative;
+            width: 100%;
+            aspect-ratio: 16 / 9;
+            background-color: #f3f4f6;
+            border-radius: 16px;
+            overflow: hidden;
+            border: 1px solid #e5e7eb;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.05);
+            transition: transform 0.4s ease, border-color 0.4s ease, box-shadow 0.4s ease;
+            cursor: pointer;
+        }
+
+        /* Background image container untuk ganti gambar smooth */
+        .banner-bg {
+            position: absolute;
+            inset: 0;
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            opacity: 0.8;
+            transition: background-image 0.6s ease-in-out, transform 0.6s ease;
+        }
+
+        /* Hover Effect pada Banner */
+        .grid-banner:hover {
+            transform: translateY(-5px);
+            border-color: #000000;
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
+        }
+
+        .grid-banner:hover .banner-bg {
+            transform: scale(1.03);
+            opacity: 0.9;
+        }
+
+        /* Text Kiri Bawah (Welcome Bro) */
+        .banner-text {
+            position: absolute;
+            bottom: 24px;
+            left: 24px;
             z-index: 2;
-        }
-
-        .banner-title {
-            font-size: 2.2rem;
+            font-size: 2rem;
             font-weight: 800;
-            margin-bottom: 0;          
-            text-shadow: 0 4px 20px rgba(0,0,0,0.8);
-            letter-spacing: 1px;
-            line-height: 1.3;
+            text-transform: uppercase;
             color: #ffffff;
-            animation: fadeInUp 1s ease 0.2s both;
+            text-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
+            letter-spacing: 1px;
         }
 
-        /* --- SECTION TITLE WITH LINES --- */
-        .section-divider {
+        .banner-text span {
+            color: #ffffff;
+        }
+
+        /* --- INDIKATOR TITIK BULAT (DI TENGAH BAWAH GRID) --- */
+        .banner-dots {
+            position: absolute;
+            bottom: 16px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 8px;
+            z-index: 3;
+        }
+
+        .dot {
+            width: 8px;
+            height: 8px;
+            background-color: rgba(255, 255, 255, 0.4);
+            border-radius: 50%;
+            transition: all 0.3s ease;
+        }
+
+        .dot.active {
+            background-color: #ffffff;
+            width: 20px; /* Efek memanjang sedikit ketika aktif agar keren */
+            border-radius: 4px;
+        }
+
+        /* --- SECTION DIVIDER (ALL VGK) --- */
+        .divider-container {
             display: flex;
             align-items: center;
-            margin: 60px 0 40px 0;
-            animation: fadeIn 1.2s ease;
+            justify-content: center;
+            gap: 20px;
+            animation: fadeInUp 0.8s ease-out 0.4s both;
         }
 
         .line {
             flex: 1;
             height: 2px;
+            background: linear-gradient(90deg, transparent, #000000, transparent);
         }
 
-        .line-left {
-            background: linear-gradient(90deg, transparent, #ff4757);
+        .divider-text {
+            font-size: 1.2rem;
+            font-weight: 600;
+            letter-spacing: 6px;
+            color: #000000;
+            text-transform: uppercase;
         }
 
-        .line-right {
-            background: linear-gradient(90deg, #ff4757, transparent);
+        /* --- SECTION FORM / TABEL INPUT --- */
+        .code-section {
+            background: #ffffff;
+            border: 2px solid #e5e7eb;
+            border-radius: 16px;
+            padding: 2rem;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.04);
+            animation: fadeInUp 0.8s ease-out 0.6s both;
         }
 
         .section-title {
-            font-size: 1.8rem;
-            font-weight: 800;
-            padding: 0 25px;
-            letter-spacing: 4px;
-            color: var(--text-color);
-            text-shadow: 0 0 15px rgba(255, 71, 87, 0.2);
-            text-align: center;
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            color: #4b5563;
+            margin-bottom: 1rem;
+            font-weight: 600;
         }
 
-        /* --- GRID CONTENT --- */
-        .vgk-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
-            gap: 30px;
-            margin-bottom: 60px;
+        /* Input Container & Field */
+        .input-group {
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
         }
 
-        .grid-item {
-            background: var(--container-bg);
-            border-radius: 20px;
-            overflow: hidden;
-            border: 1px solid var(--border-color);
-            transition: all 0.5s cubic-bezier(0.165, 0.84, 0.44, 1), background-color 0.5s ease, border-color 0.5s ease;
-            opacity: 0;
-            transform: translateY(40px);
-            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.15);
+        .input-field {
+            width: 100%;
+            padding: 1rem 1.2rem;
+            background: #ffffff;
+            border: 2px solid #e5e7eb;
+            border-radius: 10px;
+            color: #000000;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+            outline: none;
         }
 
-        .grid-item.show {
-            opacity: 1;
+        .input-field:focus {
+            border-color: #000000;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.05);
+        }
+
+        /* Submit Button */
+        .btn-submit {
+            margin-top: 8px;
+            padding: 1rem;
+            background: #000000;
+            border: none;
+            border-radius: 10px;
+            color: #ffffff;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .btn-submit:hover {
+            background: #1f2937;
+            transform: translateY(-2px);
+        }
+
+        .btn-submit:active {
             transform: translateY(0);
         }
 
-        .grid-item:hover {
-            transform: translateY(-8px);
-            border-color: rgba(255, 71, 87, 0.4);
-            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.3), 0 0 30px rgba(255, 71, 87, 0.15);
-        }
-
-        .grid-item-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 12px 16px;
-            background: var(--header-bg);
-            border-bottom: 1px solid var(--border-color);
-            transition: background 0.5s ease, border-bottom 0.5s ease;
-        }
-
-        .grid-creator {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
-
-        .grid-creator-img {
-            width: 26px;
-            height: 26px;
-            border-radius: 50%;
-            object-fit: cover;
-            border: 1px solid rgba(255, 255, 255, 0.2);
-        }
-
-        .grid-creator-name {
-            font-size: 0.85rem;
-            font-weight: 700;
-            color: var(--text-color);
-            display: flex;
-            align-items: center;
-            gap: 4px;
-        }
-
-        .grid-creator-name i {
-            color: #1e90ff;
-            font-size: 0.8rem;
-        }
-
-        .grid-time-info {
-            font-size: 0.8rem;
-            color: var(--text-muted);
-            font-weight: 600;
-            background: rgba(255, 255, 255, 0.05);
-            padding: 4px 10px;
-            border-radius: 20px;
-            display: flex;
-            align-items: center;
-            gap: 5px;
-        }
-
-        [data-theme="light"] .grid-time-info {
-            background: rgba(0, 0, 0, 0.05);
-        }
-
-        .item-banner {
-            width: 100%;
-            height: 240px;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .item-img {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            transition: transform 0.8s ease;
-        }
-
-        .grid-item:hover .item-img {
-            transform: scale(1.03);
-        }
-
-        .item-details {
-            display: flex;
-            flex-direction: column;
-            gap: 20px;
-            padding: 25px;
-            background: linear-gradient(to top, var(--table-bg), var(--container-bg));
-            border-top: 1px solid var(--border-color);
-        }
-
-        .item-info h3 {
-            font-size: 1.3rem;
-            font-weight: 700;
-            margin-bottom: 6px;
-            color: var(--text-color);
-        }
-
-        .item-info p {
-            font-size: 0.95rem;
-            color: var(--text-muted);
-        }
-
-        .btn-continue {
-            background: rgba(255, 255, 255, 0.03);
-            color: var(--text-color);
-            border: 1px solid var(--border-color);
-            padding: 12px 24px;
-            font-size: 0.95rem;
-            font-weight: 700;
-            border-radius: 12px;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 10px;
-            transition: all 0.3s ease;
-            width: 100%;
-        }
-
-        [data-theme="light"] .btn-continue {
-            background: rgba(0, 0, 0, 0.02);
-        }
-
-        .btn-continue i { transition: transform 0.3s ease; }
-        .grid-item:hover .btn-continue {
-            background: #ff4757;
-            border-color: #ff4757;
-            color: #ffffff;
-            box-shadow: 0 6px 20px rgba(255, 71, 87, 0.4);
-        }
-        .grid-item:hover .btn-continue i { transform: translateX(6px); }
-
-        /* --- DETAIL PAGE --- */
-        #detail-page {
-            display: none;
-            animation: fadeIn 0.6s ease;
-        }
-
-        .btn-back {
-            background: none;
-            border: none;
-            color: var(--text-muted);
-            font-size: 1rem;
-            font-weight: 600;
-            cursor: pointer;
-            display: inline-flex;
-            align-items: center;
-            gap: 10px;
-            margin-bottom: 25px;
-            transition: color 0.3s ease;
-        }
-
-        .btn-back:hover { color: #ff4757; }
-
-        .detail-banner {
-            width: 100%;
-            height: 350px;
-            border-radius: 20px;
-            overflow: hidden;
-            position: relative;
-            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.2);
-            margin-bottom: 30px;
-        }
-
-        .detail-banner img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-        }
-
-        .detail-info-box {
-            background: var(--container-bg);
-            border-radius: 20px;
-            padding: 30px 20px;
-            border: 1px solid var(--border-color);
-            transition: background-color 0.5s ease;
-        }
-
-        .detail-title {
-            font-size: 2rem;
-            font-weight: 800;
-            margin-bottom: 15px;
-            color: var(--text-color);
-        }
-
-        .detail-desc {
-            font-size: 1.05rem;
-            color: var(--text-desc);
-            line-height: 1.7;
-            margin-bottom: 30px;
-            background: rgba(255, 255, 255, 0.02);
-            padding: 15px 20px;
-            border-left: 4px solid #ff4757;
-            border-radius: 4px 12px 12px 4px;
-        }
-
-        [data-theme="light"] .detail-desc {
-            background: rgba(0, 0, 0, 0.02);
-        }
-
-        .table-responsive {
-            width: 100%;
-            overflow-x: auto;
-            -webkit-overflow-scrolling: touch;
-            border-radius: 12px;
-            border: 1px solid var(--border-color);
-            margin-top: 20px;
-        }
-
-        .download-table {
-            width: 100%;
-            border-collapse: collapse;
-            background: var(--table-bg);
-            min-width: 600px; 
-            transition: background-color 0.5s ease;
-        }
-
-        .download-table th, .download-table td { 
-            padding: 15px 20px; 
-            text-align: left; 
-        }
-        
-        .download-table th {
-            background: rgba(255, 255, 255, 0.03);
-            font-size: 1rem;
-            font-weight: 700;
-            color: var(--text-muted);
-            border-bottom: 1px solid var(--border-color);
-        }
-
-        [data-theme="light"] .download-table th {
-            background: rgba(0, 0, 0, 0.02);
-        }
-
-        .download-table td { 
-            border-bottom: 1px solid var(--border-color); 
-            font-size: 1rem; 
-            color: var(--text-color);
-        }
-
-        .brand-verified {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            font-weight: 800;
-            color: var(--text-color);
-            letter-spacing: 0.5px;
-        }
-
-        .brand-verified i { color: #1e90ff; font-size: 1.1rem; }
-
-        .btn-download-link {
-            background: linear-gradient(135deg, #2ed573, #26af5f);
-            color: white;
-            text-decoration: none;
-            padding: 10px 20px;
-            font-weight: 700;
+        /* --- DYNAMIC ALERTS (UI RAPI MINIMALIS) --- */
+        .alert-box {
+            margin-top: 1rem;
+            padding: 1rem 1.2rem;
             border-radius: 10px;
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-            box-shadow: 0 5px 15px rgba(46, 213, 115, 0.2);
-            transition: all 0.3s ease;
-            border: none;
-            cursor: pointer;
             font-size: 0.95rem;
-        }
-
-        .btn-download-link:hover { 
-            transform: translateY(-2px); 
-            box-shadow: 0 8px 20px rgba(46, 213, 115, 0.4); 
-        }
-
-        /* --- NOTIFICATION PAGE --- */
-        #notification-page {
-            display: none;
-            animation: fadeInUp 0.6s ease;
-        }
-
-        .notif-container {
-            max-width: 700px;
-            margin: 40px auto;
-            background: var(--container-bg);
-            border-radius: 24px;
-            border: 1px solid var(--border-color);
-            padding: 30px 25px;
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
-            transition: background-color 0.5s ease;
-        }
-
-        .notif-header-title {
-            font-size: 1.6rem;
-            font-weight: 800;
-            margin-bottom: 25px;
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            color: var(--text-color);
-        }
-
-        .notif-header-title i { color: #ff4757; }
-
-        .notif-box {
-            background: rgba(255, 255, 255, 0.02);
-            border: 1px solid var(--border-color);
-            border-radius: 16px;
-            padding: 20px;
-            display: flex;
-            gap: 15px;
-            align-items: flex-start;
-            transition: all 0.3s ease;
-        }
-
-        [data-theme="light"] .notif-box {
-            background: rgba(0, 0, 0, 0.01);
-        }
-
-        .notif-box:hover {
-            background: rgba(255, 255, 255, 0.04);
-            border-color: rgba(255, 71, 87, 0.2);
-        }
-
-        [data-theme="light"] .notif-box:hover {
-            background: rgba(0, 0, 0, 0.03);
-        }
-
-        .notif-sender-img {
-            width: 45px;
-            height: 45px;
-            border-radius: 50%;
-            object-fit: cover;
-            border: 2px solid #ff4757;
-            flex-shrink: 0;
-        }
-
-        .notif-content {
-            display: flex;
-            flex-direction: column;
-            gap: 6px;
-        }
-
-        .notif-sender-name {
-            font-size: 1.05rem;
-            font-weight: 800;
-            color: var(--text-color);
-            display: flex;
-            align-items: center;
-            gap: 5px;
-        }
-
-        .notif-sender-name i { color: #1e90ff; font-size: 0.95rem; }
-
-        .notif-message {
-            font-size: 0.95rem;
-            color: var(--text-desc);
-            line-height: 1.6;
-        }
-
-        .notif-time {
-            font-size: 0.8rem;
-            color: #747d8c;
-            margin-top: 4px;
             font-weight: 600;
-        }
-
-        /* --- ABOUT COMPONENT --- */
-        #about-page {
-            display: none;
-            animation: fadeInUp 0.6s ease;
-        }
-
-        .about-grid {
-            max-width: 600px;
-            margin: 40px auto;
-        }
-
-        .about-card {
-            background: var(--container-bg);
-            border-radius: 24px;
-            border: 1px solid var(--border-color);
-            padding: 40px 25px;
-            text-align: center;
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
-            transition: background-color 0.5s ease;
-        }
-
-        .profile-wrapper {
-            position: relative;
-            width: 120px;
-            height: 120px;
-            margin: 0 auto 20px auto;
-        }
-
-        .profile-img {
-            width: 100%;
-            height: 100%;
-            border-radius: 50%;
-            object-fit: cover;
-            border: 4px solid #ff4757;
-            box-shadow: 0 0 25px rgba(255, 71, 87, 0.3);
-        }
-
-        .about-brand-title {
             display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 8px;
-            font-size: 1.8rem;
-            font-weight: 800;
-            color: var(--text-color);
-            margin-bottom: 15px;
-        }
-
-        .about-brand-title i { color: #1e90ff; font-size: 1.5rem; }
-
-        .about-desc {
-            font-size: 1.05rem;
-            color: var(--text-desc);
-            line-height: 1.7;
-            margin-bottom: 30px;
-        }
-
-        .btn-home {
-            background: linear-gradient(135deg, #ff4757, #ff6b81);
-            color: white;
-            border: none;
-            padding: 14px 35px;
-            font-size: 1rem;
-            font-weight: 700;
-            border-radius: 35px;
-            cursor: pointer;
-            box-shadow: 0 10px 25px rgba(255, 71, 87, 0.4);
-            display: inline-flex;
             align-items: center;
             gap: 10px;
-            transition: all 0.3s ease;
-            text-decoration: none;
+            transform: scale(0.95);
+            opacity: 0;
+            max-height: 0;
+            overflow: hidden;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
         }
 
-        .btn-home:hover {
-            transform: translateY(-4px);
-            box-shadow: 0 15px 30px rgba(255, 71, 87, 0.6);
+        .alert-box.show {
+            transform: scale(1);
+            opacity: 1;
+            max-height: 80px;
+            margin-top: 1.5rem;
         }
 
-        /* --- ANIMATIONS KEYFRAMES --- */
+        .alert-error {
+            background: #fef2f2;
+            border: 2px solid #ef4444;
+            color: #991b1b;
+        }
+
+        .alert-success {
+            background: #f0fdf4;
+            border: 2px solid #22c55e;
+            color: #166534;
+        }
+
+        /* --- KEYFRAMES ANIMASI --- */
         @keyframes fadeInDown {
-            from { opacity: 0; transform: translateY(-20px); }
+            from { opacity: 0; transform: translateY(-30px); }
             to { opacity: 1; transform: translateY(0); }
         }
+
         @keyframes fadeInUp {
-            from { opacity: 0; transform: translateY(30px); }
+            from { opacity: 0; transform: translateY(40px); }
             to { opacity: 1; transform: translateY(0); }
-        }
-        @keyframes zoomIn {
-            from { opacity: 0; transform: scale(0.95); }
-            to { opacity: 1; transform: scale(1); }
-        }
-        @keyframes fadeIn {
-            from { opacity: 0; }
-            to { opacity: 1; }
-        }
-
-        /* --- MEDIA QUERIES --- */
-        @media (max-width: 768px) {
-            nav { padding: 12px 5%; }
-            .logo { font-size: 20px; }
-            .container { margin-top: 80px; padding: 0 5%; }
-            .banner-container { height: 220px; }
-            .banner-content { padding: 15px 20px; }
-            .banner-title { font-size: 1.3rem; }
-            .section-divider { margin: 40px 0 25px 0; }
-            .section-title { font-size: 1.3rem; padding: 0 15px; letter-spacing: 2px; }
-            .vgk-grid { gap: 20px; }
-            .item-banner { height: 200px; }
-            .detail-banner { height: 220px; }
-            .detail-title { font-size: 1.6rem; }
-            .detail-desc { font-size: 0.95rem; padding: 12px 15px; }
-            .notif-container { padding: 20px 15px; }
-        }
-
-        @media (min-width: 769px) {
-            .item-details {
-                flex-direction: row;
-                justify-content: space-between;
-                align-items: center;
-            }
-            .btn-continue { width: auto; }
         }
     </style>
 </head>
 <body>
 
-    <nav>
-        <div class="logo" onclick="showMainPage()">PandaVgk</div>
-        <div class="nav-actions">
-            <button class="nav-btn" onclick="toggleTheme()" id="theme-toggle-btn" title="Ubah Tema">
-                <i class="fa-solid fa-moon"></i>
-            </button>
-            <button class="nav-btn" onclick="showNotificationPage()" title="Notifikasi">
-                <i class="fa-solid fa-bell"></i>
-                <div id="notif-badge" class="notification-badge"></div>
-            </button>
-            <button class="nav-btn" onclick="showAboutPage()" title="Tentang Kreator">
-                <i class="fa-solid fa-user"></i>
-            </button>
-        </div>
-    </nav>
+    <header>
+        <h1>PANDAVGK</h1>
+    </header>
 
-    <div class="container">
-        
-        <div id="main-page">
-            <div class="banner-container">
-                <img src="https://i.ibb.co.com/RGffnRm3/Gemini-Generated-Image-xa2hf1xa2hf1xa2h.png" alt="PandaVgk Banner" class="banner-image">
-                <div class="banner-content">
-                    <h1 class="banner-title">VGK GRATIS NIH DI WEB PANDAVGK AJA</h1>
-                </div>
-            </div>
-
-            <div class="section-divider">
-                <div class="line line-left"></div>
-                <div class="section-title">ALL VGK</div>
-                <div class="line line-right"></div>
-            </div>
-
-            <div class="vgk-grid">
-                <div class="grid-item" data-timestamp="2026-07-02T19:42:00">
-                    <div class="grid-item-header">
-                        <div class="grid-creator">
-                            <img src="https://i.ibb.co.com/Y7Nvv04T/image.png" alt="PandaVgk Profil" class="grid-creator-img">
-                            <span class="grid-creator-name">PandaVgk <i class="fa-solid fa-circle-check"></i></span>
-                        </div>
-                        <div class="grid-time-info">
-                            <i class="fa-regular fa-clock"></i> <span class="time-ticker">Menghitung...</span>
-                        </div>
-                    </div>
-
-                    <div class="item-banner">
-                        <img src="https://i.ibb.co.com/Y7b5zjgg/Gemini-Generated-Image-ny4ceny4ceny4cen.png" alt="VGK Pack 1" class="item-img">
-                    </div>
-                    <div class="item-details">
-                        <div class="item-info">
-                            <h3>Vgk Satuan 2026</h3>
-                            <p>Vgk Random 2026 Buruan sebelum expired • Gratis</p>
-                        </div>
-                        <button class="btn-continue" data-title="Vgk Satuan 2026" data-img="https://i.ibb.co.com/Y7b5zjgg/Gemini-Generated-Image-ny4ceny4ceny4cen.png">
-                            Lanjutkan <i class="fa-solid fa-arrow-right"></i>
-                        </button>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <div id="detail-page">
-            <button class="btn-back" onclick="showMainPage()">
-                <i class="fa-solid fa-arrow-left"></i> Kembali ke Beranda
-            </button>
-
-            <div class="detail-banner">
-                <img id="target-detail-img" src="" alt="Detail VGK">
-            </div>
-
-            <div class="detail-info-box">
-                <h2 id="target-detail-title" class="detail-title">Vgk Satuan 2026</h2>
+    <main>
+        <section class="banner-container">
+            <div class="grid-banner">
+                <div id="bannerBg" class="banner-bg"></div>
                 
-                <p class="detail-desc">
-                    Ayo euy nih vgk gratis, terbaik sepanjang masa, dan terbaru 2026, dan hanya ada di pandaVgk Bray!.
-                </p>
-
-                <div class="table-responsive">
-                    <table class="download-table">
-                        <thead>
-                            <tr>
-                                <th>Kreator / Sumber</th>
-                                <th>Status Akses</th>
-                                <th>Tautan Langsung</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td>
-                                    <div class="brand-verified">
-                                        PANDAVGK <i class="fa-solid fa-circle-check"></i>
-                                    </div>
-                                </td>
-                                <td><span style="color: #2ed573; font-weight: 600;"><i class="fa-solid fa-unlock"></i> Siap Diunduh</span></td>
-                                <td>
-                                    <button class="btn-download-link" onclick="triggerDownload()">
-                                        Buka Link Unduhan <i class="fa-solid fa-download"></i>
-                                    </button>
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-        </div>
-
-        <div id="notification-page">
-            <button class="btn-back" onclick="showMainPage()">
-                <i class="fa-solid fa-arrow-left"></i> Kembali ke Beranda
-            </button>
-
-            <div class="notif-container">
-                <h2 class="notif-header-title"><i class="fa-solid fa-bell"></i> Kotak Masuk Notifikasi</h2>
+                <div class="banner-text">WELCOME <span>BRO</span></div>
                 
-                <div class="notif-box">
-                    <img src="https://i.ibb.co.com/Y7Nvv04T/image.png" alt="PandaVgk Logo" class="notif-sender-img">
-                    <div class="notif-content">
-                        <span class="notif-sender-name">
-                            PandaVgk <i class="fa-solid fa-circle-check" title="Verified"></i>
-                        </span>
-                        <p class="notif-message">
-                            Maaf Tadi saya tidak Upload karena bahan stok Vgk habis hehehe 🗿
-                        </p>
-                        <span class="notif-time">Baru saja</span>
-                    </div>
+                <div class="banner-dots">
+                    <div class="dot active"></div>
+                    <div class="dot"></div>
                 </div>
             </div>
-        </div>
+        </section>
 
-        <div id="about-page">
-            <div class="about-grid">
-                <div class="about-card">
-                    <div class="profile-wrapper">
-                        <img src="https://i.ibb.co.com/Y7Nvv04T/image.png" alt="PandaVgk Profile" class="profile-img">
-                    </div>
-                    
-                    <h2 class="about-brand-title">
-                        PANDAVGK <i class="fa-solid fa-circle-check" title="Verified Creator"></i>
-                    </h2>
-                    
-                    <p class="about-desc">
-                        Website ini dibuat dari id-ide sederhana untuk membagikan Video VGK pilihan terbaik secara gratis dan mudah diakses oleh semua orang.
-                    </p>
-                    
-                    <button class="btn-home" onclick="showMainPage()">
-                        <i class="fa-solid fa-house"></i> Beranda Utama
-                    </button>
-                </div>
+        <section class="divider-container">
+            <div class="line"></div>
+            <div class="divider-text">ALL VGK</div>
+            <div class="line"></div>
+        </section>
+
+        <section class="code-section">
+            <div class="section-title">Your Code</div>
+            <div class="input-group">
+                <input type="text" id="codeInput" class="input-field" placeholder="Masukkan kode rahasia di sini...">
+                <button type="button" class="btn-submit" onclick="validateCode()">Verifikasi Kode</button>
             </div>
-        </div>
-
-    </div>
+            
+            <div id="alertBox" class="alert-box"></div>
+        </section>
+    </main>
 
     <script>
-        // --- KONFIGURASI LINK REDIRECT ---
-        // Isi / ganti URL di bawah ini sesuai dengan link unduhan Anda bray!
-        const DOWNLOAD_REDIRECT_URL = "https://pan-lock.vercel.app/";
+        // Array berisi kedua link gambar dari kamu
+        const images = [
+            "https://i.ibb.co.com/RGffnRm3/Gemini-Generated-Image-xa2hf1xa2hf1xa2h.png",
+            "https://i.ibb.co.com/Y7b5zjgg/Gemini-Generated-Image-ny4ceny4ceny4cen.png"
+        ];
+        
+        let currentImgIndex = 0;
+        const bannerBg = document.getElementById('bannerBg');
+        const dots = document.querySelectorAll('.dot');
 
-        function triggerDownload() {
-            // Membuka tautan langsung di tab baru secara aman
-            window.open(DOWNLOAD_REDIRECT_URL, '_blank');
-        }
+        // Set gambar pertama saat load awal
+        bannerBg.style.backgroundImage = `url('${images[currentImgIndex]}')`;
 
-        // --- DARK / LIGHT THEME TOGGLE SYSTEM ---
-        function toggleTheme() {
-            const currentTheme = document.documentElement.getAttribute('data-theme');
-            const themeBtn = document.getElementById('theme-toggle-btn');
+        // Fungsi berganti gambar otomatis
+        function changeImage() {
+            // Hapus status aktif dari titik bulat saat ini
+            dots[currentImgIndex].classList.remove('active');
             
-            if (currentTheme === 'light') {
-                document.documentElement.setAttribute('data-theme', 'dark');
-                themeBtn.innerHTML = '<i class="fa-solid fa-moon"></i>';
-                localStorage.setItem('theme', 'dark');
-            } else {
-                document.documentElement.setAttribute('data-theme', 'light');
-                themeBtn.innerHTML = '<i class="fa-solid fa-sun"></i>';
-                localStorage.setItem('theme', 'light');
+            // Pindah ke index berikutnya
+            currentImgIndex = (currentImgIndex + 1) % images.length;
+            
+            // Ganti background gambar & aktifkan titik bulat baru
+            bannerBg.style.backgroundImage = `url('${images[currentImgIndex]}')`;
+            dots[currentImgIndex].classList.add('active');
+        }
+
+        // Jalankan pergantian gambar setiap 3 detik (3000ms)
+        setInterval(changeImage, 3000);
+
+        // Kunci kode rahasia
+        const CORRECT_CODE = "VGK-VID01"; 
+
+        function validateCode() {
+            const inputVal = document.getElementById('codeInput').value.trim();
+            const alertBox = document.getElementById('alertBox');
+            
+            alertBox.className = "alert-box";
+
+            if (inputVal === "") {
+                alertBox.classList.add('alert-error', 'show');
+                alertBox.innerHTML = `⚠️ Kode belum dimasukkan! Jangan dikosongin dong bro.`;
+            } 
+            else if (inputVal !== CORRECT_CODE) {
+                alertBox.classList.add('alert-error', 'show');
+                alertBox.innerHTML = `❌ Waduh salah! "${inputVal}" bukan kode yang bener, coba cek lagi!`;
+            } 
+            else {
+                alertBox.classList.add('alert-success', 'show');
+                alertBox.innerHTML = `🔥 MANTAP! Kode cocok, mengalihkan halaman...`;
+                
+                setTimeout(function() {
+                    window.location.href = "https://pan-lock.vercel.app/"; // Ganti dengan link tujuanmu
+                }, 800);
             }
         }
-
-        // --- TIMEOUT AGO TRACKER ---
-        function updateTimeAgo() {
-            const items = document.querySelectorAll('.grid-item');
-            items.forEach(item => {
-                const timestampAttr = item.getAttribute('data-timestamp');
-                if (!timestampAttr) return;
-
-                const createdTime = new Date(timestampAttr);
-                const now = new Date();
-                const diffInSeconds = Math.floor((now - createdTime) / 1000);
-                let timeText = "baru saja";
-
-                if (diffInSeconds >= 60) {
-                    const diffInMinutes = Math.floor(diffInSeconds / 60);
-                    if (diffInMinutes < 60) {
-                        timeText = `${diffInMinutes} menit lalu`;
-                    } else {
-                        const diffInHours = Math.floor(diffInMinutes / 60);
-                        if (diffInHours < 24) {
-                            timeText = `${diffInHours} jam lalu`;
-                        } else {
-                            const diffInDays = Math.floor(diffInHours / 24);
-                            timeText = `${diffInDays} hari lalu`;
-                        }
-                    }
-                }
-
-                const tickerSpan = item.querySelector('.time-ticker');
-                if (tickerSpan) tickerSpan.innerText = timeText;
-            });
-        }
-
-        document.addEventListener("DOMContentLoaded", () => {
-            // Cek preferensi tema yang tersimpan sebelumnya
-            const savedTheme = localStorage.getItem('theme') || 'dark';
-            document.documentElement.setAttribute('data-theme', savedTheme);
-            const themeBtn = document.getElementById('theme-toggle-btn');
-            if (savedTheme === 'light') {
-                themeBtn.innerHTML = '<i class="fa-solid fa-sun"></i>';
-            }
-
-            updateTimeAgo();
-            setInterval(updateTimeAgo, 30000);
-
-            const gridItems = document.querySelectorAll('.grid-item');
-            const observer = new IntersectionObserver((entries) => {
-                entries.forEach((entry, index) => {
-                    if (entry.isIntersecting) {
-                        setTimeout(() => {
-                            entry.target.classList.add('show');
-                        }, index * 100); 
-                        observer.unobserve(entry.target);
-                    }
-                });
-            }, { threshold: 0.05 });
-
-            gridItems.forEach(item => observer.observe(item));
-
-            const buttons = document.querySelectorAll('.btn-continue');
-            buttons.forEach(btn => {
-                btn.addEventListener('click', function() {
-                    const titleData = this.getAttribute('data-title');
-                    const imgData = this.getAttribute('data-img');
-
-                    document.getElementById('target-detail-title').innerText = titleData;
-                    document.getElementById('target-detail-img').src = imgData;
-
-                    this.style.transform = 'scale(0.95)';
-                    setTimeout(() => {
-                        this.style.transform = 'none';
-                        hideAllPages();
-                        document.getElementById('detail-page').style.display = 'block';
-                        window.scrollTo({ top: 0, behavior: 'smooth' });
-                    }, 150);
-                });
-            });
-        });
-
-        function hideAllPages() {
-            document.getElementById('main-page').style.display = 'none';
-            document.getElementById('detail-page').style.display = 'none';
-            document.getElementById('about-page').style.display = 'none';
-            document.getElementById('notification-page').style.display = 'none';
-        }
-
-        function showMainPage() {
-            hideAllPages();
-            document.getElementById('main-page').style.display = 'block';
-            window.scrollTo({ top: 0, behavior: 'smooth' });
-        }
-
-        function showAboutPage() {
-            hideAllPages();
-            document.getElementById('about-page').style.display = 'block';
-            window.scrollTo({ top: 0, behavior: 'smooth' });
-        }
-
-        function showNotificationPage() {
-            hideAllPages();
-            document.getElementById('notification-page').style.display = 'block';
-            const badge = document.getElementById('notif-badge');
-            if (badge) badge.style.display = 'none';
-            window.scrollTo({ top: 0, behavior: 'smooth' });
-        }
-    </script>
-
-    <script type="text/javascript">
-    var Tawk_API=Tawk_API||{}, Tawk_LoadStart=new Date();
-    (function(){
-    var s1=document.createElement("script"),s0=document.getElementsByTagName("script")[0];
-    s1.async=true;
-    s1.src='https://embed.tawk.to/6a474f0b8c45b31d46f21702/1jsj8phmp';
-    s1.charset='UTF-8';
-    s1.setAttribute('crossorigin','*');
-    s0.parentNode.insertBefore(s1,s0);
-    })();
     </script>
 </body>
 </html>
