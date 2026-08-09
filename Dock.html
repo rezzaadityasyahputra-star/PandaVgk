@@ -1,0 +1,324 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Panskip-Dock - Dokumentasi & Panduan Layanan</title>
+  
+  <!-- Favicon -->
+  <link rel="icon" type="image/x-icon" href="https://i.ibb.co.com/7Hx3Y6c/image.jpg">
+  <link rel="shortcut icon" href="https://i.ibb.co.com/7Hx3Y6c/image.jpg">
+
+  <style>
+    /* Reset & Clean Style Rules */
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      -webkit-tap-highlight-color: transparent !important;
+      outline: none !important;
+      user-select: none;
+    }
+
+    /* Color Palette */
+    :root {
+      --bg-color: #f8fafc;
+      --card-bg: #ffffff;
+      --text-main: #0f172a;
+      --text-muted: #64748b;
+      --primary-dark: #0f172a;
+      --border-color: #e2e8f0;
+      --accent-gray: #f1f5f9;
+      --brand-blue: #2563eb;
+      --shadow-sm: 0 2px 5px rgba(0, 0, 0, 0.03);
+      --shadow-md: 0 12px 30px -5px rgba(0, 0, 0, 0.08);
+      --shadow-lg: 0 20px 35px -10px rgba(0, 0, 0, 0.12);
+      --radius: 20px;
+      --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    /* Background Grid Pattern */
+    body {
+      background-color: var(--bg-color);
+      background-image: 
+        linear-gradient(to right, rgba(15, 23, 42, 0.04) 1px, transparent 1px),
+        linear-gradient(to bottom, rgba(15, 23, 42, 0.04) 1px, transparent 1px);
+      background-size: 24px 24px;
+      color: var(--text-main);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 1.5rem 1rem 3rem 1rem;
+      line-height: 1.6;
+    }
+
+    .container {
+      width: 100%;
+      max-width: 860px;
+      margin: 0 auto;
+    }
+
+    /* Top Navigation Bar */
+    .top-nav {
+      width: 100%;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 2rem;
+      padding: 0.5rem 0;
+    }
+
+    .nav-btn {
+      width: 48px;
+      height: 48px;
+      background: var(--card-bg);
+      border: 1px solid var(--border-color);
+      border-radius: 14px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      box-shadow: var(--shadow-sm);
+      transition: var(--transition);
+      color: var(--text-main);
+      text-decoration: none;
+    }
+
+    .nav-btn:hover {
+      box-shadow: var(--shadow-md);
+      transform: translateY(-2px);
+    }
+
+    .nav-btn:active {
+      transform: translateY(0);
+    }
+
+    .brand-title-nav {
+      font-size: 1.8rem;
+      font-weight: 900;
+      letter-spacing: -0.03em;
+      color: var(--text-main);
+      text-align: center;
+    }
+
+    /* Dummy div untuk menjaga posisi judul tetap presisi di tengah */
+    .nav-spacer {
+      width: 48px;
+      height: 48px;
+    }
+
+    .svg-icon {
+      width: 24px;
+      height: 24px;
+      fill: currentColor;
+    }
+
+    /* Documentation Section Styles */
+    .doc-card {
+      background: var(--card-bg);
+      border-radius: var(--radius);
+      border: 1px solid var(--border-color);
+      box-shadow: var(--shadow-md);
+      padding: 2.25rem;
+      margin-bottom: 2rem;
+      animation: fadeInUp 0.5s ease-out;
+    }
+
+    .doc-header {
+      border-bottom: 2px solid var(--accent-gray);
+      padding-bottom: 1rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .doc-header h2 {
+      font-size: 1.5rem;
+      font-weight: 800;
+      color: var(--text-main);
+      letter-spacing: -0.02em;
+    }
+
+    .doc-header p {
+      font-size: 0.95rem;
+      color: var(--text-muted);
+      margin-top: 0.25rem;
+    }
+
+    .doc-body {
+      color: var(--text-main);
+      font-size: 0.98rem;
+      line-height: 1.8;
+      text-align: justify;
+      user-select: text;
+    }
+
+    .doc-body h3 {
+      font-size: 1.15rem;
+      font-weight: 800;
+      color: var(--text-main);
+      margin: 1.5rem 0 0.5rem 0;
+    }
+
+    .doc-body p {
+      margin-bottom: 1rem;
+    }
+
+    /* Feature List Box */
+    .feature-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 1rem;
+      margin: 1.5rem 0;
+    }
+
+    .feature-item {
+      background: var(--accent-gray);
+      border: 1px solid var(--border-color);
+      border-radius: 14px;
+      padding: 1.25rem;
+      transition: var(--transition);
+    }
+
+    .feature-item:hover {
+      border-color: var(--brand-blue);
+      transform: translateY(-2px);
+    }
+
+    .feature-item h4 {
+      font-size: 1rem;
+      font-weight: 800;
+      color: var(--text-main);
+      margin-bottom: 0.3rem;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .feature-item p {
+      font-size: 0.88rem;
+      color: var(--text-muted);
+      margin-bottom: 0;
+      line-height: 1.5;
+    }
+
+    /* Code Block Box */
+    .code-box {
+      background: #0f172a;
+      color: #e2e8f0;
+      padding: 1rem 1.25rem;
+      border-radius: 12px;
+      font-family: "Courier New", Courier, monospace;
+      font-size: 0.9rem;
+      margin: 1rem 0;
+      overflow-x: auto;
+      user-select: text;
+    }
+
+    @keyframes fadeInUp {
+      from {
+        opacity: 0;
+        transform: translateY(15px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    @media (max-width: 640px) {
+      body {
+        padding: 1rem 0.75rem;
+      }
+      .brand-title-nav {
+        font-size: 1.4rem;
+      }
+      .doc-card {
+        padding: 1.5rem;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    
+    <!-- Top Navigation Bar -->
+    <nav class="top-nav">
+      <!-- Tombol Link Kiri: Icon Home -->
+      <a href="index.html" class="nav-btn" title="Kembali">
+        <svg class="svg-icon" viewBox="0 0 24 24">
+          <path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/>
+        </svg>
+      </a>
+
+      <!-- Nama Web di Tengah Atas -->
+      <h1 class="brand-title-nav">Panskip-Dock</h1>
+
+      <!-- Spacer Kosong untuk Menjaga Judul Tetap di Tengah -->
+      <div class="nav-spacer"></div>
+    </nav>
+
+    <!-- Content Documentation -->
+    <main class="doc-card">
+      <div class="doc-header">
+        <h2>DOKUMENTASI KINERJA SISTEM</h2>
+        <p>Panduan Teknis, Arsitektur Pengalihan, dan Kebijakan Layanan PANSKIP</p>
+      </div>
+
+      <div class="doc-body">
+        <h3>1. Pengenalan Panskip-Dock</h3>
+        <p>Panskip-Dock adalah pusat dokumentasi resmi untuk ekosistem platform PANSKIP. Dokumen ini memberikan gambaran komprehensif mengenai mekanisme perutean URL, perlindungan privasi pengguna, serta integrasi API dekripsi yang digunakan oleh sistem kami.</p>
+
+        <h3>2. Fitur Utama Platform</h3>
+        <div class="feature-grid">
+          <div class="feature-item">
+            <h4>
+              <svg class="svg-icon" style="width: 18px; height: 18px; fill: #2563eb;" viewBox="0 0 24 24">
+                <path d="M13 2L3 14h7v8l10-12h-7z"/>
+              </svg>
+              Ekstraksi Instan
+            </h4>
+            <p>Memproses pengalihan tautan shortener dalam hitungan milidetik secara otomatis.</p>
+          </div>
+
+          <div class="feature-item">
+            <h4>
+              <svg class="svg-icon" style="width: 18px; height: 18px; fill: #2563eb;" viewBox="0 0 24 24">
+                <path d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-5.45 9-12V5l-9-4z"/>
+              </svg>
+              Perlindungan Privasi
+            </h4>
+            <p>Sistem tidak menyimpan riwayat penjelajahan, alamat IP, atau log data pencarian Anda.</p>
+          </div>
+
+          <div class="feature-item">
+            <h4>
+              <svg class="svg-icon" style="width: 18px; height: 18px; fill: #2563eb;" viewBox="0 0 24 24">
+                <path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-2 10h-4v4h-2v-4H7v-2h4V7h2v4h4v2z"/>
+              </svg>
+              Bebas Iklan Pop-up
+            </h4>
+            <p>Menghilangkan hambatan halaman interstitium dan jebakan tautan iklan pihak ketiga.</p>
+          </div>
+        </div>
+
+        <h3>3. Cara Kerja Mesin Bypass</h3>
+        <p>Ketika Anda memasukkan URL pemendek ke dalam kolom input utama, mesin PANSKIP mengirimkan permintaan terenkripsi ke server dekripsi. Server memproses struktur pengalihan HTTP (seperti respons 301/302 Redirect), mengekstrak tujuan asli dari payload header, dan mengembalikan URL final yang bersih secara real-time.</p>
+
+        <div class="code-box">
+          INPUT_URL  ➔ API_REQUEST (SSL ENCRYPTED) ➔ RESOLVE_HEADER ➔ DIRECT_LINK
+        </div>
+
+        <h3>4. Syarat & Ketentuan Penggunaan</h3>
+        <p>Penggunaan PANSKIP tunduk pada ketentuan berikut:</p>
+        <p>• Layanan ini disediakan secara gratis untuk mempermudah navigasi informasi yang aman.</p>
+        <p>• Dilarang menggunakan alat ini untuk menyalahgunakan tautan ilegal atau berbahaya.</p>
+        <p>• PANSKIP berhak melakukan pembaruan algoritma secara berkala tanpa pemberitahuan sebelumnya demi menjaga stabilitas sistem.</p>
+      </div>
+    </main>
+
+  </div>
+
+</body>
+</html>
