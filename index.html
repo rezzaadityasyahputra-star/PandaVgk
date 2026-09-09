@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>PanSkip — Admin Dashboard & User Monitoring</title>
+  <title>PanSkip — Executive Admin Dashboard</title>
   <link rel="icon" type="image/png" href="https://i.ibb.co.com/nqPTyK8G/image.png" />
   
   <!-- Google Fonts & Tailwind CSS -->
@@ -30,26 +30,26 @@
 </head>
 <body class="bg-dark-base text-gray-100 font-sans antialiased min-h-screen p-4 sm:p-8">
 
-  <!-- TOAST CONTAINER -->
+  <!-- TOAST NOTIFICATION CONTAINER -->
   <div id="toast-container" class="fixed bottom-5 right-5 z-[190] flex flex-col gap-3 pointer-events-none"></div>
 
-  <!-- MODAL LOGIN ADMIN -->
+  <!-- MODAL LOGIN ADMIN KHUSUS -->
   <div id="admin-login-modal" class="fixed inset-0 z-[100] bg-black/90 backdrop-blur-md flex items-center justify-center p-4">
     <div class="bg-dark-card border border-brand-500/30 max-w-md w-full p-8 rounded-2xl shadow-2xl text-center">
       <div class="w-16 h-16 rounded-2xl bg-brand-500/10 border border-brand-500/30 text-brand-400 flex items-center justify-center mx-auto mb-4 shadow-glow">
         <i data-lucide="shield-check" class="w-8 h-8"></i>
       </div>
-      <h2 class="text-2xl font-black text-white mb-1">Admin PanSkip Login</h2>
-      <p class="text-xs text-gray-400 mb-6">Masuk menggunakan akun Administrator utama</p>
+      <h2 class="text-2xl font-black text-white mb-1">PanSkip Admin Panel</h2>
+      <p class="text-xs text-gray-400 mb-6">Masuk menggunakan akun Administrator Utama</p>
 
       <form id="admin-login-form" class="space-y-4 text-left">
         <div>
           <label class="block text-xs font-semibold text-gray-300 mb-1">Email Admin</label>
-          <input type="email" id="admin-email" value="gimancuy@gmail.com" required placeholder="admin@domain.com" class="w-full px-4 py-3 bg-dark-base border border-gray-700 rounded-xl text-white text-sm focus:border-brand-500 focus:outline-none">
+          <input type="email" id="admin-email" value="rezamin@gmail.com" required placeholder="admin@domain.com" class="w-full px-4 py-3 bg-dark-base border border-gray-700 rounded-xl text-white text-sm focus:border-brand-500 focus:outline-none">
         </div>
         <div>
           <label class="block text-xs font-semibold text-gray-300 mb-1">Password</label>
-          <input type="password" id="admin-password" value="gimancuy" required placeholder="••••••••" class="w-full px-4 py-3 bg-dark-base border border-gray-700 rounded-xl text-white text-sm focus:border-brand-500 focus:outline-none">
+          <input type="password" id="admin-password" value="gimancuyb" required placeholder="••••••••" class="w-full px-4 py-3 bg-dark-base border border-gray-700 rounded-xl text-white text-sm focus:border-brand-500 focus:outline-none">
         </div>
         <button type="submit" id="btn-login-submit" class="w-full py-3.5 bg-brand-500 hover:bg-brand-600 text-dark-base font-extrabold text-sm rounded-xl transition-all shadow-glow flex items-center justify-center gap-2">
           <span>Masuk ke Dashboard</span>
@@ -58,7 +58,7 @@
     </div>
   </div>
 
-  <!-- MAIN ADMIN DASHBOARD -->
+  <!-- MAIN ADMIN DASHBOARD (DITAMPILKAN KETIKA AUTH SUKSES) -->
   <div id="admin-dashboard" class="hidden">
     <!-- HEADER -->
     <header class="max-w-7xl mx-auto flex items-center justify-between pb-6 mb-8 border-b border-gray-800">
@@ -66,7 +66,7 @@
         <img src="https://i.ibb.co.com/nqPTyK8G/image.png" alt="Logo" class="w-10 h-10 rounded-xl border border-brand-500/30" />
         <div>
           <h1 class="text-xl font-extrabold text-white">Pan<span class="text-brand-400">Skip</span> Admin</h1>
-          <p class="text-xs text-gray-400">Monitoring User, Kick, & Kirim Pesan Admin</p>
+          <p class="text-xs text-gray-400">Monitoring User, Kick Status, & Catatan Administrator</p>
         </div>
       </div>
       <div class="flex items-center gap-3">
@@ -117,7 +117,8 @@
     const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImF0Z3VqaHBvdXB0cWlwY2pjaGxtIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODg4NzI0MzQsImV4cCI6MjEwNDQ0ODQzNH0.BsFpKqtj3sdsnHzJttT_2gDAxyul7ljou5FcU8SnUpc';
     const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
-    const ALLOWED_ADMIN_EMAIL = "gimancuy@gmail.com";
+    // EMAIL ADMIN TUNGGAL YANG DIBERIKAN HAK AKSES
+    const ALLOWED_ADMIN_EMAIL = "rezamin@gmail.com";
 
     lucide.createIcons();
 
@@ -133,13 +134,13 @@
       setTimeout(() => toast.remove(), 4000);
     }
 
-    // CHECK ADMIN SESSION & PERMISSION
+    // MEMERIKSA SESI ADMIN
     async function checkAdminAuth() {
       const { data: { session } } = await supabase.auth.getSession();
       
       if (session?.user) {
         if (session.user.email !== ALLOWED_ADMIN_EMAIL) {
-          showToast("Akses Ditolak! Akun ini bukan administrator.", "error");
+          showToast("Akses Ditolak! Akun ini bukan administrator utama.", "error");
           await supabase.auth.signOut();
           document.getElementById("admin-login-modal").classList.remove("hidden");
           document.getElementById("admin-dashboard").classList.add("hidden");
@@ -156,7 +157,7 @@
       }
     }
 
-    // LOGIN / AUTO-REGISTER ADMIN FORM SUBMIT
+    // LOGIN & AUTO REGISTER UNTUK AKUN rezamin@gmail.com
     document.getElementById("admin-login-form").addEventListener("submit", async (e) => {
       e.preventDefault();
       const email = document.getElementById("admin-email").value.trim();
@@ -164,7 +165,7 @@
       const btnSubmit = document.getElementById("btn-login-submit");
 
       if (email !== ALLOWED_ADMIN_EMAIL) {
-        showToast("Email tersebut tidak terdaftar sebagai Admin!", "error");
+        showToast("Email tersebut tidak memiliki akses Administrator!", "error");
         return;
       }
 
@@ -174,13 +175,13 @@
       // 1. Coba Login Terlebih Dahulu
       let { data, error } = await supabase.auth.signInWithPassword({ email, password });
       
-      // 2. Jika akun belum terdaftar di Supabase, daftarkan secara otomatis!
+      // 2. Apabila belum pernah didaftarkan ke Supabase Auth, otomatis didaftarkan
       if (error && (error.message.includes("Invalid login credentials") || error.message.includes("User not found"))) {
         showToast("Membuatkan akun Admin di Supabase...", "success");
         const signUpRes = await supabase.auth.signUp({ 
           email, 
           password,
-          options: { data: { full_name: "Admin PanSkip" } }
+          options: { data: { full_name: "Admin Rezza" } }
         });
 
         if (signUpRes.error) {
@@ -189,7 +190,6 @@
           btnSubmit.innerHTML = `<span>Masuk ke Dashboard</span>`;
           return;
         } else {
-          // Buat profil admin di tabel profiles
           if (signUpRes.data?.user) {
             await supabase.from("profiles").upsert([{ 
               id: signUpRes.data.user.id, 
@@ -198,7 +198,6 @@
               role: "admin"
             }]);
           }
-          // Login Ulang Setelah Register
           const retryLogin = await supabase.auth.signInWithPassword({ email, password });
           data = retryLogin.data;
           error = retryLogin.error;
@@ -211,7 +210,7 @@
       if (error) {
         showToast(`Login Gagal: ${error.message}`, "error");
       } else {
-        showToast("Selamat datang, Admin!");
+        showToast("Selamat datang kembali, Admin Rezza!");
         checkAdminAuth();
       }
     });
@@ -223,7 +222,7 @@
       checkAdminAuth();
     });
 
-    // MEMUAT DAFTAR USER DARI TABEL PROFILES
+    // AMBIL DATA SELURUH USER
     async function fetchUsers() {
       const tbody = document.getElementById("user-table-body");
       const { data: profiles, error } = await supabase.from('profiles').select('*').order('updated_at', { ascending: false });
@@ -277,7 +276,7 @@
       lucide.createIcons();
     }
 
-    // FUNGSI KICK / UNKICK
+    // AKSI KICK ATAU UNKICK
     window.toggleKick = async (userId, kickStatus) => {
       const { error } = await supabase.from('profiles').update({ is_kicked: kickStatus }).eq('id', userId);
       if (error) showToast("Gagal memperbarui status user!", "error");
@@ -287,7 +286,7 @@
       }
     };
 
-    // FUNGSI SIMPAN KOMENTAR ADMIN
+    // AKSI SIMPAN PESAN ADMIN
     window.saveComment = async (userId) => {
       const commentVal = document.getElementById(`input-comment-${userId}`).value.trim();
       const { error } = await supabase.from('profiles').update({ admin_comment: commentVal }).eq('id', userId);
@@ -295,7 +294,7 @@
       else showToast("Pesan admin tersimpan!");
     };
 
-    // REALTIME LISTENER SUPABASE
+    // LISTENER REALTIME SUPABASE
     supabase.channel('admin-profiles-changes')
       .on('postgres_changes', { event: '*', schema: 'public', table: 'profiles' }, () => fetchUsers())
       .subscribe();
