@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>PanSkip — Admin Dashboard & User Monitoring</title>
+  <link rel="icon" type="image/png" href="https://i.ibb.co.com/nqPTyK8G/image.png" />
+  
+  <!-- Google Fonts & Tailwind CSS -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: { sans: ['Inter', 'sans-serif'] },
+          colors: {
+            brand: { 400: '#4ade80', 500: '#22c55e', 600: '#16a34a' },
+            dark: { base: '#0b0f17', card: '#111827', border: '#1f2937' }
+          }
+        }
+      }
+    }
+  </script>
+</head>
+<body class="bg-dark-base text-gray-100 font-sans antialiased min-h-screen p-4 sm:p-8">
+
+  <!-- TOAST CONTAINER -->
+  <div id="toast-container" class="fixed bottom-5 right-5 z-[90] flex flex-col gap-3 pointer-events-none"></div>
+
+  <!-- MODAL LOGIN ADMIN -->
+  <div id="admin-login-modal" class="fixed inset-0 z-[100] bg-black/90 backdrop-blur-md flex items-center justify-center p-4">
+    <div class="bg-dark-card border border-brand-500/30 max-w-md w-full p-8 rounded-2xl shadow-2xl text-center">
+      <div class="w-16 h-16 rounded-2xl bg-brand-500/10 border border-brand-500/30 text-brand-400 flex items-center justify-center mx-auto mb-4">
+        <i data-lucide="shield-check" class="w-8 h-8"></i>
+      </div>
+      <h2 class="text-2xl font-black text-white mb-1">Admin PanSkip Login</h2>
+      <p class="text-xs text-gray-400 mb-6">Silakan login menggunakan Akun Administrator</p>
+
+      <form id="admin-login-form" class="space-y-4 text-left">
+        <div>
+          <label class="block text-xs font-semibold text-gray-300 mb-1">Email Admin</label>
+          <input type="email" id="admin-email" required placeholder="admin@domain.com" class="w-full px-4 py-3 bg-dark-base border border-gray-700 rounded-xl text-white text-sm focus:border-brand-500 focus:outline-none">
+        </div>
+        <div>
+          <label class="block text-xs font-semibold text-gray-300 mb-1">Password</label>
+          <input type="password" id="admin-password" required placeholder="••••••••" class="w-full px-4 py-3 bg-dark-base border border-gray-700 rounded-xl text-white text-sm focus:border-brand-500 focus:outline-none">
+        </div>
+        <button type="submit" class="w-full py-3.5 bg-brand-500 hover:bg-brand-600 text-dark-base font-extrabold text-sm rounded-xl transition-all shadow-glow">
+          Masuk ke Dashboard
+        </button>
+      </form>
+    </div>
+  </div>
+
+  <!-- MAIN ADMIN DASHBOARD (TERSEMBUNYI SEBELUM LOGIN) -->
+  <div id="admin-dashboard" class="hidden">
+    <!-- HEADER -->
+    <header class="max-w-7xl mx-auto flex items-center justify-between pb-6 mb-8 border-b border-gray-800">
+      <div class="flex items-center gap-3">
+        <img src="https://i.ibb.co.com/nqPTyK8G/image.png" alt="Logo" class="w-10 h-10 rounded-xl border border-brand-500/30" />
+        <div>
+          <h1 class="text-xl font-extrabold text-white">Pan<span class="text-brand-400">Skip</span> Admin</h1>
+          <p class="text-xs text-gray-400">Monitoring User, Kick, & Kirim Pesan Admin</p>
+        </div>
+      </div>
+      <div class="flex items-center gap-3">
+        <span id="logged-admin-email" class="text-xs text-brand-400 font-mono"></span>
+        <button id="btn-admin-logout" class="px-3 py-1.5 bg-red-500/20 text-red-400 border border-red-500/30 rounded-lg text-xs font-bold hover:bg-red-500/30">
+          Logout
+        </button>
+      </div>
+    </header>
+
+    <!-- MAIN TABLE CONTAINER -->
+    <main class="max-w-7xl mx-auto">
+      <div class="bg-dark-card border border-gray-800 rounded-2xl overflow-hidden shadow-2xl">
+        <div class="p-4 sm:p-6 border-b border-gray-800 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
+          <div>
+            <h2 class="text-lg font-bold text-white">Daftar Pengguna Terdaftar</h2>
+            <p class="text-xs text-gray-400">Pantau dan kelola akses user secara langsung</p>
+          </div>
+          <button id="btn-refresh" class="px-4 py-2 bg-gray-800 hover:bg-gray-700 text-xs font-bold rounded-xl flex items-center gap-2 border border-gray-700 transition-all">
+            <i data-lucide="refresh-cw" class="w-4 h-4 text-brand-400"></i>
+            <span>Refresh Data</span>
+          </button>
+        </div>
+
+        <div class="overflow-x-auto">
+          <table class="w-full text-left text-xs sm:text-sm">
+            <thead class="bg-gray-900/80 text-gray-400 font-semibold uppercase tracking-wider text-[11px] border-b border-gray-800">
+              <tr>
+                <th class="p-4">User Details</th>
+                <th class="p-4">Status Akses</th>
+                <th class="p-4">Komentar / Pesan Admin</th>
+                <th class="p-4 text-right">Aksi Kick</th>
+              </tr>
+            </thead>
+            <tbody id="user-table-body" class="divide-y divide-gray-800/60">
+              <tr>
+                <td colspan="4" class="p-8 text-center text-gray-500">Memuat daftar pengguna...</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <script>
+    const SUPABASE_URL = 'https://atgujhpouptqipcjchlm.supabase.co';
+    const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImF0Z3VqaHBvdXB0cWlwY2pjaGxtIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODg4NzI0MzQsImV4cCI6MjEwNDQ0ODQzNH0.BsFpKqtj3sdsnHzJttT_2gDAxyul7ljou5FcU8SnUpc';
+    const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+
+    lucide.createIcons();
+
+    function showToast(message, type = "success") {
+      const container = document.getElementById("toast-container");
+      const toast = document.createElement("div");
+      toast.className = `flex items-center gap-3 px-4 py-3 rounded-xl shadow-xl text-xs font-semibold border transition-all duration-300 ${
+        type === "success" ? "bg-dark-card border-brand-500/50 text-emerald-400" : "bg-dark-card border-red-500/50 text-red-400"
+      }`;
+      toast.innerHTML = `<i data-lucide="${type === 'success' ? 'check-circle' : 'alert-circle'}" class="w-4 h-4"></i><span>${message}</span>`;
+      container.appendChild(toast);
+      lucide.createIcons();
+      setTimeout(() => toast.remove(), 3000);
+    }
+
+    // CHECK ADMIN SESSION
+    async function checkAdminAuth() {
+      const { data: { session } } = await supabase.auth.getSession();
+      if (session?.user) {
+        document.getElementById("admin-login-modal").classList.add("hidden");
+        document.getElementById("admin-dashboard").classList.remove("hidden");
+        document.getElementById("logged-admin-email").textContent = session.user.email;
+        fetchUsers();
+      } else {
+        document.getElementById("admin-login-modal").classList.remove("hidden");
+        document.getElementById("admin-dashboard").classList.add("hidden");
+      }
+    }
+
+    // LOGIN ADMIN FORM SUBMIT
+    document.getElementById("admin-login-form").addEventListener("submit", async (e) => {
+      e.preventDefault();
+      const email = document.getElementById("admin-email").value.trim();
+      const password = document.getElementById("admin-password").value.trim();
+
+      const { data, error } = await supabase.auth.signInWithPassword({ email, password });
+      if (error) {
+        showToast(error.message, "error");
+      } else {
+        showToast("Login Admin Berhasil!");
+        checkAdminAuth();
+      }
+    });
+
+    // LOGOUT ADMIN
+    document.getElementById("btn-admin-logout").addEventListener("click", async () => {
+      await supabase.auth.signOut();
+      checkAdminAuth();
+    });
+
+    // MEMUAT DAFTAR USER DARI TABEL PROFILES
+    async function fetchUsers() {
+      const tbody = document.getElementById("user-table-body");
+      const { data: profiles, error } = await supabase.from('profiles').select('*');
+
+      if (error) {
+        tbody.innerHTML = `<tr><td colspan="4" class="p-8 text-center text-red-400">Gagal mengambil data: ${error.message}</td></tr>`;
+        return;
+      }
+
+      if (!profiles || profiles.length === 0) {
+        tbody.innerHTML = `<tr><td colspan="4" class="p-8 text-center text-gray-500">Belum ada pengguna terdaftar.</td></tr>`;
+        return;
+      }
+
+      tbody.innerHTML = '';
+      profiles.forEach(user => {
+        const tr = document.createElement('tr');
+        tr.className = "hover:bg-gray-800/30 transition-colors";
+        const isKicked = user.is_kicked || false;
+        const comment = user.admin_comment || '';
+
+        tr.innerHTML = `
+          <td class="p-4">
+            <div class="font-bold text-white">${user.full_name || 'Pengguna PanSkip'}</div>
+            <div class="font-mono text-[11px] text-gray-500">${user.id}</div>
+          </td>
+          <td class="p-4">
+            ${isKicked 
+              ? `<span class="px-2.5 py-1 rounded-full text-[10px] font-extrabold bg-red-500/20 text-red-400 border border-red-500/30">KICKED / BLOCKED</span>`
+              : `<span class="px-2.5 py-1 rounded-full text-[10px] font-extrabold bg-brand-500/20 text-brand-400 border border-brand-500/30">AKTIF</span>`
+            }
+          </td>
+          <td class="p-4">
+            <div class="flex items-center gap-2">
+              <input type="text" id="input-comment-${user.id}" value="${comment}" placeholder="Tulis alasan kick/pesan..." class="w-full px-3 py-2 bg-dark-base border border-gray-700 rounded-lg text-xs text-white focus:border-brand-500 focus:outline-none">
+              <button onclick="saveComment('${user.id}')" class="px-3 py-2 bg-brand-500/20 hover:bg-brand-500/30 text-brand-400 border border-brand-500/40 rounded-lg text-xs font-bold transition-all shrink-0">
+                Kirim
+              </button>
+            </div>
+          </td>
+          <td class="p-4 text-right">
+            ${isKicked
+              ? `<button onclick="toggleKick('${user.id}', false)" class="px-4 py-2 bg-emerald-500/20 hover:bg-emerald-500/30 text-emerald-400 border border-emerald-500/40 rounded-xl text-xs font-bold transition-all">Unkick</button>`
+              : `<button onclick="toggleKick('${user.id}', true)" class="px-4 py-2 bg-red-500/20 hover:bg-red-500/30 text-red-400 border border-red-500/40 rounded-xl text-xs font-bold transition-all">Kick User</button>`
+            }
+          </td>
+        `;
+        tbody.appendChild(tr);
+      });
+      lucide.createIcons();
+    }
+
+    // FUNGSI KICK / UNKICK
+    window.toggleKick = async (userId, kickStatus) => {
+      const { error } = await supabase.from('profiles').update({ is_kicked: kickStatus }).eq('id', userId);
+      if (error) showToast("Gagal memperbarui status user!", "error");
+      else {
+        showToast(kickStatus ? "User berhasil di-kick!" : "User berhasil di-unkick!");
+        fetchUsers();
+      }
+    };
+
+    // FUNGSI SIMPAN KOMENTAR ADMIN
+    window.saveComment = async (userId) => {
+      const commentVal = document.getElementById(`input-comment-${userId}`).value.trim();
+      const { error } = await supabase.from('profiles').update({ admin_comment: commentVal }).eq('id', userId);
+      if (error) showToast("Gagal mengirim pesan!", "error");
+      else showToast("Pesan admin tersimpan!");
+    };
+
+    // REALTIME LISTENER SUPABASE
+    supabase.channel('admin-profiles-changes')
+      .on('postgres_changes', { event: '*', schema: 'public', table: 'profiles' }, () => fetchUsers())
+      .subscribe();
+
+    document.getElementById("btn-refresh").addEventListener("click", () => fetchUsers());
+
+    checkAdminAuth();
+  </script>
+</body>
+</html>
