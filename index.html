@@ -31,7 +31,7 @@
 <body class="bg-dark-base text-gray-100 font-sans antialiased min-h-screen p-4 sm:p-8">
 
   <!-- TOAST CONTAINER -->
-  <div id="toast-container" class="fixed bottom-5 right-5 z-[90] flex flex-col gap-3 pointer-events-none"></div>
+  <div id="toast-container" class="fixed bottom-5 right-5 z-[190] flex flex-col gap-3 pointer-events-none"></div>
 
   <!-- MODAL LOGIN ADMIN -->
   <div id="admin-login-modal" class="fixed inset-0 z-[100] bg-black/90 backdrop-blur-md flex items-center justify-center p-4">
@@ -49,16 +49,16 @@
         </div>
         <div>
           <label class="block text-xs font-semibold text-gray-300 mb-1">Password</label>
-          <input type="password" id="admin-password" required placeholder="••••••••" class="w-full px-4 py-3 bg-dark-base border border-gray-700 rounded-xl text-white text-sm focus:border-brand-500 focus:outline-none">
+          <input type="password" id="admin-password" value="gimancuy" required placeholder="••••••••" class="w-full px-4 py-3 bg-dark-base border border-gray-700 rounded-xl text-white text-sm focus:border-brand-500 focus:outline-none">
         </div>
-        <button type="submit" id="btn-login-submit" class="w-full py-3.5 bg-brand-500 hover:bg-brand-600 text-dark-base font-extrabold text-sm rounded-xl transition-all shadow-glow">
-          Masuk ke Dashboard
+        <button type="submit" id="btn-login-submit" class="w-full py-3.5 bg-brand-500 hover:bg-brand-600 text-dark-base font-extrabold text-sm rounded-xl transition-all shadow-glow flex items-center justify-center gap-2">
+          <span>Masuk ke Dashboard</span>
         </button>
       </form>
     </div>
   </div>
 
-  <!-- MAIN ADMIN DASHBOARD (TERSEMBUNYI SEBELUM LOGIN) -->
+  <!-- MAIN ADMIN DASHBOARD -->
   <div id="admin-dashboard" class="hidden">
     <!-- HEADER -->
     <header class="max-w-7xl mx-auto flex items-center justify-between pb-6 mb-8 border-b border-gray-800">
@@ -117,7 +117,6 @@
     const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImF0Z3VqaHBvdXB0cWlwY2pjaGxtIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODg4NzI0MzQsImV4cCI6MjEwNDQ0ODQzNH0.BsFpKqtj3sdsnHzJttT_2gDAxyul7ljou5FcU8SnUpc';
     const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
-    // EMAIL ADMIN YANG DIIZINKAN MASUK
     const ALLOWED_ADMIN_EMAIL = "gimancuy@gmail.com";
 
     lucide.createIcons();
@@ -125,13 +124,13 @@
     function showToast(message, type = "success") {
       const container = document.getElementById("toast-container");
       const toast = document.createElement("div");
-      toast.className = `flex items-center gap-3 px-4 py-3 rounded-xl shadow-xl text-xs font-semibold border transition-all duration-300 ${
+      toast.className = `flex items-center gap-3 px-4 py-3 rounded-xl shadow-xl text-xs font-semibold border transition-all duration-300 pointer-events-auto ${
         type === "success" ? "bg-dark-card border-brand-500/50 text-emerald-400" : "bg-dark-card border-red-500/50 text-red-400"
       }`;
-      toast.innerHTML = `<i data-lucide="${type === 'success' ? 'check-circle' : 'alert-circle'}" class="w-4 h-4"></i><span>${message}</span>`;
+      toast.innerHTML = `<i data-lucide="${type === 'success' ? 'check-circle' : 'alert-circle'}" class="w-4 h-4 shrink-0"></i><span>${message}</span>`;
       container.appendChild(toast);
       lucide.createIcons();
-      setTimeout(() => toast.remove(), 3000);
+      setTimeout(() => toast.remove(), 4000);
     }
 
     // CHECK ADMIN SESSION & PERMISSION
@@ -139,7 +138,6 @@
       const { data: { session } } = await supabase.auth.getSession();
       
       if (session?.user) {
-        // PERIKSA APABILA EMAIL SESUAI EMAIL ADMIN HAK AKSES
         if (session.user.email !== ALLOWED_ADMIN_EMAIL) {
           showToast("Akses Ditolak! Akun ini bukan administrator.", "error");
           await supabase.auth.signOut();
@@ -158,7 +156,7 @@
       }
     }
 
-    // LOGIN ADMIN FORM SUBMIT
+    // LOGIN / AUTO-REGISTER ADMIN FORM SUBMIT
     document.getElementById("admin-login-form").addEventListener("submit", async (e) => {
       e.preventDefault();
       const email = document.getElementById("admin-email").value.trim();
@@ -171,15 +169,47 @@
       }
 
       btnSubmit.disabled = true;
-      btnSubmit.textContent = "Memverifikasi...";
+      btnSubmit.innerHTML = `<div class="w-4 h-4 border-2 border-dark-base border-t-transparent rounded-full animate-spin"></div><span>Memverifikasi...</span>`;
 
-      const { data, error } = await supabase.auth.signInWithPassword({ email, password });
+      // 1. Coba Login Terlebih Dahulu
+      let { data, error } = await supabase.auth.signInWithPassword({ email, password });
       
+      // 2. Jika akun belum terdaftar di Supabase, daftarkan secara otomatis!
+      if (error && (error.message.includes("Invalid login credentials") || error.message.includes("User not found"))) {
+        showToast("Membuatkan akun Admin di Supabase...", "success");
+        const signUpRes = await supabase.auth.signUp({ 
+          email, 
+          password,
+          options: { data: { full_name: "Admin PanSkip" } }
+        });
+
+        if (signUpRes.error) {
+          showToast(`Gagal mendaftar: ${signUpRes.error.message}`, "error");
+          btnSubmit.disabled = false;
+          btnSubmit.innerHTML = `<span>Masuk ke Dashboard</span>`;
+          return;
+        } else {
+          // Buat profil admin di tabel profiles
+          if (signUpRes.data?.user) {
+            await supabase.from("profiles").upsert([{ 
+              id: signUpRes.data.user.id, 
+              email: email, 
+              full_name: "Admin Rezza",
+              role: "admin"
+            }]);
+          }
+          // Login Ulang Setelah Register
+          const retryLogin = await supabase.auth.signInWithPassword({ email, password });
+          data = retryLogin.data;
+          error = retryLogin.error;
+        }
+      }
+
       btnSubmit.disabled = false;
-      btnSubmit.textContent = "Masuk ke Dashboard";
+      btnSubmit.innerHTML = `<span>Masuk ke Dashboard</span>`;
 
       if (error) {
-        showToast(error.message || "Password salah!", "error");
+        showToast(`Login Gagal: ${error.message}`, "error");
       } else {
         showToast("Selamat datang, Admin!");
         checkAdminAuth();
